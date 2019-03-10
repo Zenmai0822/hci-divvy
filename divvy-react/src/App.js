@@ -4,6 +4,8 @@ import './App.css';
 import { Helmet } from 'react-helmet';
 
 import Index from './screens/index';
+import Room from './screens/room';
+import Setup from './screens/setup';
 import DivvyNav from './components/navbar';
 function About() {
   return <h2>About</h2>;
@@ -11,6 +13,14 @@ function About() {
 
 function Users() {
   return <h2>Users</h2>;
+}
+
+function Upload() {
+  return <Link to='/setup'>Finished upload</Link>;
+}
+
+function Stub() {
+  return <h2>This is a stub</h2>;
 }
 
 function AppRouter() {
@@ -30,6 +40,11 @@ function AppRouter() {
         <Route path="/" exact component={Index} />
         <Route path="/about/" component={About} />
         <Route path="/users/" component={Users} />
+        {/* stubs */} 
+        <Route path="/room/" component={Room} />
+        <Route path="/setup/" component={Setup} />
+        <Route path="/upload/" component={Upload} />
+        <Route path="/waiting/" component={Stub} />
       </div>
     </Router>
   );
