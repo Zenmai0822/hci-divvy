@@ -13,7 +13,6 @@ class CanvasImgCropper extends Component {
       blob: null
     };
     this.handleClick = this.handleClick.bind(this);
-    this.imageCallback = this.imageCallback.bind(this);
     this.cropCallback = this.cropCallback.bind(this);
 
   }
@@ -44,11 +43,6 @@ class CanvasImgCropper extends Component {
   console.log('The CANVAS was clicked at.');
   console.log(e.nativeEvent.layerX + " " + e.nativeEvent.layerY);
   }
-  imageCallback(blob) {
-    this.setState({
-      blob: URL.createObjectURL(blob)
-    });
-  }
   cropCallback(blob) {
     this.setState({
       blob: URL.createObjectURL(blob)
@@ -62,7 +56,7 @@ class CanvasImgCropper extends Component {
       return <CanvasCropCorners
               handleClick={this.handleClick} 
               width={this.props.viewWidth}
-              height={this.props.viewHeight - 70}
+              height={this.props.viewHeight}
               imageCallback={this.cropCallback}
               image={URL.createObjectURL(this.props.file)}
               topLeft={this.state.topLeft}
@@ -82,7 +76,7 @@ class CanvasImgCropper extends Component {
               image={this.state.blob}
               width={this.props.viewWidth}
               height={scaledHeight}
-              imageCallback={this.imageCallback}
+              imageCallback={this.props.imageCallback}
               anchors={{
                 TL:this.state.topLeft,     
                 TR:this.state.topRight,
