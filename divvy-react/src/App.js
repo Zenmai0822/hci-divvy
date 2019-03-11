@@ -8,6 +8,7 @@ import Room from './screens/room';
 import Setup from './screens/setup';
 import DivvyNav from './components/navbar';
 import ItemModal from './components/itemModal';
+import TotalAndTaxModal from './components/totalAndTaxModal';
 
 function About() {
   return <h2>About</h2>;
@@ -38,7 +39,7 @@ function AppRouter() {
           />
         </Helmet>
        <DivvyNav/>
-        <ItemModal/>
+        <TotalAndTaxModal/>
         <Route path="/" exact component={Index} />
         <Route path="/about/" component={About} />
         <Route path="/users/" component={Users} />
