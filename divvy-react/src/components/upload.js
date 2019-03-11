@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone'
-import { Helmet } from 'react-helmet';
-import PerspectiveCrop from './perspectiveCrop';
-import {Redirect} from "react-router-dom";
 
-class Upload extends React.Component {
+import {Redirect} from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+
+class Upload extends Component {
 	constructor(props) {
 	  super(props);
 	  this.state = {
@@ -43,7 +43,7 @@ class Upload extends React.Component {
 			    <section>
 			      <div {...getRootProps()}>
 			        <input {...getInputProps()} />
-			        <p>Click to select files</p>
+			        <Button variant="success">Upload</Button>
 			      </div>
 			    </section>
 	    	)}

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 //NOTE: Do not give a image to this component that needs to be scaled.
 //Instead scale it convert it to a blob and then use that blob here. 
 //Things break and im too lazy to fix them with scaling.
-class PerspectiveCrop extends React.Component {
+class PerspectiveCrop extends Component {
   constructor(props) {
 	  super(props);
 	  this.state = {
@@ -15,6 +15,7 @@ class PerspectiveCrop extends React.Component {
   componentDidMount() {
     const canvas = this.refs.canvas
     const ctx = canvas.getContext("2d")
+    // eslint-disable-next-line 
     this.state.img.onload = () => {
    		
    		canvas.width=this.props.width;
@@ -25,10 +26,10 @@ class PerspectiveCrop extends React.Component {
 		  // unwarp the source rectangle and draw it to the destination canvas
 		  this.unwarp(this.props.anchors,this.props.unwarped,ctx);
 		  canvas.toBlob((blob) => {
-		    var linkref = URL.createObjectURL(blob);
 		    this.props.imageCallback(blob);
 			})
 		}
+		// eslint-disable-next-line
     this.state.img.src = this.props.image;
   }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from '../logo.svg';
 import { Navbar } from 'react-bootstrap';
 
-class DivvyNav extends React.Component {
+class DivvyNav extends Component {
   render() {
     return <Navbar bg="light">
 	          <img

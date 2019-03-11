@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CanvasImgCropper from '../components/canvasImgCropper';
 
-class HostCrop extends React.Component {
+class HostCrop extends Component {
 	
 
   render() {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PerspectiveCrop from './perspectiveCrop';
 import CanvasCropCorners from './canvasCropCorners';
 
-class CanvasImgCropper extends React.Component {
+class CanvasImgCropper extends Component {
 	constructor(props) {
 	  super(props);
 	  this.state = {

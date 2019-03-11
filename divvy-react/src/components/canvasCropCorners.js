@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 const sideLen = 15;
-class CanvasCropCorners extends React.Component {
+class CanvasCropCorners extends Component {
   constructor(props) {
 	  super(props);
 	  this.state = {
@@ -16,6 +16,7 @@ class CanvasCropCorners extends React.Component {
     this.setState({
     	ctx: canvas.getContext("2d")
     });
+    // eslint-disable-next-line 
     this.state.img.onload = () => {
 
 			let scaledHeight = (this.state.img.height * this.props.width)/this.state.img.width
@@ -25,12 +26,15 @@ class CanvasCropCorners extends React.Component {
 		  canvas.height=scaledHeight;
 		  
 		  // draw the example image on the source canvas
+		  // eslint-disable-next-line 
 		  this.state.ctx.drawImage(this.state.img, 0 , 0, this.props.width, scaledHeight);
+		  // eslint-disable-next-line 
 		  this.state.ctx.fillStyle = 'white';
 	   	canvas.toBlob((blob) => {
 		    this.props.imageCallback(blob);
 			});
 		}
+		// eslint-disable-next-line 
     this.state.img.src = this.props.image;
   }
 

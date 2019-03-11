@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
 import { Helmet } from 'react-helmet';
 
 import Index from './screens/index';
+
 import HostCrop from './screens/hostCrop';
+import Room from './screens/room';
+import Setup from './screens/setup';
 import DivvyNav from './components/navbar';
-function Users() {
-  return <h2>Users</h2>;
+
+function Stub() {
+  return <h2>Stub</h2>;
 }
 
 
-class AppRouter extends React.Component {
+class AppRouter extends Component {
   constructor(props) {
     super(props);
     this.state = { width: 0, height: 0 };
@@ -36,28 +40,28 @@ class AppRouter extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Helmet>
-          <link
-            rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-            integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-            crossorigin="anonymous"
-          />
-      </Helmet>
       <Router>
         <div>
-         <DivvyNav/>
-
+          <Helmet>
+            <link
+              rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+              integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+              crossorigin="anonymous"
+            />
+          </Helmet>
+          <DivvyNav/>
           <Route path="/" exact component={Index} />
-          <Route path="/users/" component={Users} />
           <Route path="/crop/" render={(props) => 
-                                        <HostCrop {...props} 
-                                                  viewHeight={this.state.height}
-                                                  viewWidth={this.state.width}/>}/>
+                                          <HostCrop {...props} 
+                                                    viewHeight={this.state.height}
+                                                    viewWidth={this.state.width}/>}/>
+          {/* stubs */} 
+          <Route path="/room/" component={Room} />
+          <Route path="/setup/" component={Setup} />
+          <Route path="/waiting/" component={Stub} />
         </div>
       </Router>
-      </React.Fragment>
     );
   }
 }
