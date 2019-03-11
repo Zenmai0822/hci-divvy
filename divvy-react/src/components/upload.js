@@ -41,9 +41,9 @@ class Upload extends Component {
           })}}>
         {({getRootProps, getInputProps}) => (
           <section>
-            <div {...getRootProps()}>
+            <div className="divvy-upload" {...getRootProps()}>
               <input {...getInputProps()} />
-              <Button variant="success">Upload</Button>
+              <Button className="btn-upload" variant="success" size="lg" block>Upload</Button>
             </div>
           </section>
         )}

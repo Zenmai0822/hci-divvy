@@ -7,14 +7,14 @@ import { Link } from 'react-router-dom';
 class Index extends Component {
   render() {
     return (
-        <div>
+        <div className="screen">
           <h1>Hello, welcome to Divvy</h1>
           <Upload />
-          <div>
+          <div className="divvy-join">
             <form>
-              <input type="text" name="roomCode" />
+              <input type="text" name="roomCode" className="input-roomcode" placeholder="Room code" />
               <br />
-              <Link to='/room'><Button variant="primary">Submit</Button></Link>
+              <Link to='/room'><Button className="btn-join" variant="primary" size="lg" block>Join</Button></Link>
             </form>
           </div>
         </div>

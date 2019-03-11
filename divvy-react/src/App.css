@@ -1,3 +1,6 @@
+@import './screens/index.css';
+@import './screens/setup.css';
+
 .App {
   text-align: center;
 }
@@ -31,3 +34,9 @@
     transform: rotate(360deg);
   }
 }
+
+/* general app styles */
+.screen {
+  padding: 20px;
+}
+
