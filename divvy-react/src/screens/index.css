@@ -1,0 +1,17 @@
+.btn-upload,
+.btn-join {
+  font-size: 20px !important; /* this might be a bit hacky... */
+}
+
+.divvy-upload,
+.divvy-join {
+  margin-top: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.input-roomcode {
+  font-size: 30px;
+  margin-bottom: 10px;
+  width: 100%;
+}
