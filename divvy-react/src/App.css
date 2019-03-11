@@ -1,4 +1,5 @@
 @import './screens/index.css';
+@import './screens/setup.css';
 
 .App {
   text-align: center;

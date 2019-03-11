@@ -1,17 +1,25 @@
+/* TODO? make single class for this */
 .btn-upload,
 .btn-join {
   font-size: 20px !important; /* this might be a bit hacky... */
+  height: 60px;
 }
 
+/* TODO? make single class for this */
 .divvy-upload,
 .divvy-join {
   margin-top: 20px;
   padding: 20px;
   text-align: center;
 }
+.divvy-join {
+  bottom: 50px;
+  margin-right: 20px; /* for some reason it doesn't respect the parent's right padding... */
+  position: absolute;
+}
 
 .input-roomcode {
-  font-size: 30px;
+  font-size: 36px;
   margin-bottom: 10px;
   width: 100%;
 }
