@@ -18,6 +18,9 @@ class AppRouter extends React.Component {
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
+  //This is all to pass around the size of the screen so we can use it for canvas and image sizing. 
+  //Probably not the most elegant way of doing it, but it seems to work. And on mobile the screen should
+  // not be changing enough to slow things down (I hope).
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);

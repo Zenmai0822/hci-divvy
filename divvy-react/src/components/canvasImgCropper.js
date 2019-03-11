@@ -77,7 +77,6 @@ class CanvasImgCropper extends React.Component {
   		let orignalWidth = Math.min(this.state.topRight.x - this.state.topLeft.x,
   														 this.state.botRight.x - this.state.botLeft.x);
   		let scaledHeight = (orignalHeight * this.props.viewWidth)/orignalWidth
-  		console.log("canvas scaled height: " + scaledHeight);
   		return <PerspectiveCrop
 						  handleClick={this.handleClick} 
 						  image={this.state.blob}

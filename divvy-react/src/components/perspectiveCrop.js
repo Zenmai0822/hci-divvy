@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+//NOTE: Do not give a image to this component that needs to be scaled.
+//Instead scale it convert it to a blob and then use that blob here. 
+//Things break and im too lazy to fix them with scaling.
 class PerspectiveCrop extends React.Component {
   constructor(props) {
 	  super(props);
@@ -23,8 +26,6 @@ class PerspectiveCrop extends React.Component {
 		  this.unwarp(this.props.anchors,this.props.unwarped,ctx);
 		  canvas.toBlob((blob) => {
 		    var linkref = URL.createObjectURL(blob);
-		    console.log(blob);
-		    console.log(linkref);
 		    this.props.imageCallback(blob);
 			})
 		}
@@ -32,8 +33,7 @@ class PerspectiveCrop extends React.Component {
   }
 
   render() {
-  	//let scaledHeight = (this.state.img.height * this.props.width)/this.state.img.width;
-    return(
+  	return(
       <div>
         <canvas ref="canvas" 
 			width={this.props.width} 
@@ -56,7 +56,7 @@ class PerspectiveCrop extends React.Component {
 	             );
 
 	  // eliminate slight space between triangles
-	 // ctx.translate(-1,1);
+	  context.translate(-1,1);
 
 	  // unwarp the top-right triangle of the warped polygon
 	  this.mapTriangle(context,
