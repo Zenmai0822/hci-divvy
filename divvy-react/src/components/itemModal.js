@@ -17,7 +17,12 @@ class ItemModal extends React.Component {
             <Form.Group as={Row}>
               <Form.Label column xs="8">This item costs:</Form.Label>
               <Col xs="4">
-                <Form.Control type="currency" placeholder="$"></Form.Control>
+                <Form.Control type="number"
+                  min="0"
+                  step="0.01"
+                  data-number-to-fixed="2"
+                  data-number-stepfactor="100"
+                  placeholder="$"></Form.Control>
               </Col>
             </Form.Group>
           </Form>
@@ -30,7 +35,7 @@ class ItemModal extends React.Component {
               <ButtonToolbar>
                 <ToggleButtonGroup type="radio" name="ratio" size="sm">
                   <ToggleButton variant="danger" value={1} style={btnStyle}>Much Less</ToggleButton>
-                  <ToggleButton variant="warning" value={2} style={btnStyle}><span className="align-middle">Less</span></ToggleButton>
+                  <ToggleButton variant="warning" value={2} style={btnStyle}>Less</ToggleButton>
                   <ToggleButton variant="success" value={3} style={btnStyle}>Average</ToggleButton>
                   <ToggleButton variant="warning" value={4} style={btnStyle}>More</ToggleButton>
                   <ToggleButton variant="danger" value={5} style={btnStyle}>Much More</ToggleButton>
