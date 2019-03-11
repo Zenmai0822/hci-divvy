@@ -64,27 +64,9 @@ class TotalAndTaxModal extends React.Component {
             </Form.Group>
             <Row>
               <Col xs="6"><b>Bill Total: </b></Col>
-              <Col xs="6" className="text-right">{this.state.billTotal}</Col>
+              <Col xs="6" className="text-right">${this.state.billTotal}</Col>
             </Row>
           </Form>
-          <hr></hr>
-          <Row className="pb-2">
-            <Col>Compated to others, you had:</Col>
-          </Row>
-          <Row p-5>
-            <Col className="justify-content-center">
-              <ButtonToolbar>
-                <ToggleButtonGroup type="radio" name="ratio" size="sm">
-                  <ToggleButton variant="danger" value={1} style={btnStyle}>Much Less</ToggleButton>
-                  <ToggleButton variant="warning" value={2} style={btnStyle}>Less</ToggleButton>
-                  <ToggleButton variant="success" value={3} style={btnStyle}>Average</ToggleButton>
-                  <ToggleButton variant="warning" value={4} style={btnStyle}>More</ToggleButton>
-                  <ToggleButton variant="danger" value={5} style={btnStyle}>Much More</ToggleButton>
-                  <ToggleButton variant="info" value={-1} style={btnStyle}>All</ToggleButton>
-                </ToggleButtonGroup>
-              </ButtonToolbar>
-            </Col>
-          </Row>
         </Container>
       </Modal.Body>
 
