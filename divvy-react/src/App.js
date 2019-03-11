@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
 import { Helmet } from 'react-helmet';
-import _ from 'lodash';
 
 import Index from './screens/index';
 import Room from './screens/room';
@@ -34,16 +33,16 @@ class AppRouter extends Component {
   }
 
   setHost() {
-    this.setState(_.assign({}, this.state, { isHost: true })) 
+    this.setState({ isHost: true });
   }
 
   // TODO call this if user backs out of host flow
   setNonHost() {
-    this.setState(_.assign({}, this.state, { isHost: false }))
+    this.setState({ isHost: false })
   }
 
   setRoomCode(roomCode) {
-    this.setState(_.assign({}, this.state, { roomCode: roomCode }))
+    this.setState({ roomCode: roomCode }); 
   }
 
   render() {
