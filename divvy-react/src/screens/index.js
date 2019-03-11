@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+
+import Upload from '../components/upload';
+
 class Index extends React.Component {
   render() {
-    return <h1>Hello, welcome to Divvy</h1>;
+    return <div> <h1>Hello, welcome to Divvy</h1>     <Upload />
+ </div>;
   }
 }
 export default Index;

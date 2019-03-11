@@ -4,19 +4,36 @@ import './App.css';
 import { Helmet } from 'react-helmet';
 
 import Index from './screens/index';
+import HostCrop from './screens/hostCrop';
 import DivvyNav from './components/navbar';
-function About() {
-  return <h2>About</h2>;
-}
-
 function Users() {
   return <h2>Users</h2>;
 }
 
-function AppRouter() {
-  return (
-    <Router>
-      <div>
+
+class AppRouter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { width: 0, height: 0 };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  }
+
+  render() {
+    return (
+      <React.Fragment>
         <Helmet>
           <link
             rel="stylesheet"
@@ -24,15 +41,22 @@ function AppRouter() {
             integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
             crossorigin="anonymous"
           />
-        </Helmet>
-       <DivvyNav/>
+      </Helmet>
+      <Router>
+        <div>
+         <DivvyNav/>
 
-        <Route path="/" exact component={Index} />
-        <Route path="/about/" component={About} />
-        <Route path="/users/" component={Users} />
-      </div>
-    </Router>
-  );
+          <Route path="/" exact component={Index} />
+          <Route path="/users/" component={Users} />
+          <Route path="/crop/" render={(props) => 
+                                        <HostCrop {...props} 
+                                                  viewHeight={this.state.height}
+                                                  viewWidth={this.state.width}/>}/>
+        </div>
+      </Router>
+      </React.Fragment>
+    );
+  }
 }
 
 export default AppRouter;
