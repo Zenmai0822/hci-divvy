@@ -22,19 +22,19 @@ class ItemModal extends React.Component {
             </Form.Group>
           </Form>
           <hr></hr>
-          <Row>
+          <Row className="pb-2">
             <Col>Compated to others, you had:</Col>
           </Row>
-          <Row>
+          <Row p-5>
             <Col className="justify-content-center">
               <ButtonToolbar>
                 <ToggleButtonGroup type="radio" name="ratio" size="sm">
-                  <ToggleButton variant="danger" value={1}>Much Less</ToggleButton>
-                  <ToggleButton variant="warning" value={2}>Less</ToggleButton>
-                  <ToggleButton variant="success" value={3}>Average</ToggleButton>
-                  <ToggleButton variant="warning" value={4}>More</ToggleButton>
-                  <ToggleButton variant="danger" value={5}>Much More</ToggleButton>
-                  <ToggleButton variant="info" value={6}>All</ToggleButton>
+                  <ToggleButton variant="danger" value={1} style={btnStyle}>Much Less</ToggleButton>
+                  <ToggleButton variant="warning" value={2} style={btnStyle}><span className="align-middle">Less</span></ToggleButton>
+                  <ToggleButton variant="success" value={3} style={btnStyle}>Average</ToggleButton>
+                  <ToggleButton variant="warning" value={4} style={btnStyle}>More</ToggleButton>
+                  <ToggleButton variant="danger" value={5} style={btnStyle}>Much More</ToggleButton>
+                  <ToggleButton variant="info" value={-1} style={btnStyle}>All</ToggleButton>
                 </ToggleButtonGroup>
               </ButtonToolbar>
             </Col>
@@ -48,5 +48,11 @@ class ItemModal extends React.Component {
     </Modal.Dialog>;
   }
 }
+
+const btnStyle = {
+  'display': 'flex',
+  'justify-content': 'center',
+  'align-items': 'center',
+};
 export default ItemModal;
 
