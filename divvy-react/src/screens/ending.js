@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, Button } from 'react-bootstrap';
 class Ending extends React.Component {
   constructor(props) {
     super(props);
