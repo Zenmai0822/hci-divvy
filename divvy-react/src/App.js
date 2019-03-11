@@ -6,6 +6,9 @@ import { Helmet } from 'react-helmet';
 import Index from './screens/index';
 import Room from './screens/room';
 import Setup from './screens/setup';
+import Bill from './screens/bill';
+import Ending from './screens/ending';
+import Finish from './screens/finish';
 import DivvyNav from './components/navbar';
 function About() {
   return <h2>About</h2>;
@@ -45,6 +48,9 @@ function AppRouter() {
         <Route path="/setup/" component={Setup} />
         <Route path="/upload/" component={Upload} />
         <Route path="/waiting/" component={Stub} />
+        <Route path="/ending/" component={Ending} />
+        <Route path="/bill/" component={Bill} />
+        <Route path="/finish/" component={Finish} />
       </div>
     </Router>
   );
