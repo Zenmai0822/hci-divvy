@@ -29,4 +29,3 @@ class DivvyNav extends React.Component {
 }
 export default DivvyNav;
 
- 
