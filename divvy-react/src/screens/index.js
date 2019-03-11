@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+
+import Upload from '../components/upload';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
-class Index extends React.Component {
+class Index extends Component {
   render() {
     return (
         <div className="screen">
           <h1>Hello, welcome to Divvy</h1>
-          <div className="divvy-upload">
-            <Link to='/upload'><Button className="btn-upload" variant="success" size="lg" block>Upload</Button></Link>
-          </div>
+          <Upload />
           <div className="divvy-join">
             <form>
               <input type="text" name="roomCode" className="input-roomcode" placeholder="Room code" />
