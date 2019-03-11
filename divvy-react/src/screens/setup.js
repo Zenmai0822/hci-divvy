@@ -3,6 +3,12 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
 class Setup extends React.Component {
+  constructor(props) {
+    super(props);
+
+    props.setHost();
+  }
+
   render() {
     return (
         <div>
