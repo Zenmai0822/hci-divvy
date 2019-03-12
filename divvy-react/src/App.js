@@ -7,6 +7,7 @@ import Index from './screens/index';
 
 import HostCrop from './screens/hostCrop';
 import Room from './screens/room';
+import Splitting from './screens/splitting';
 import Waiting from './screens/waiting';
 import Bill from './screens/bill';
 import Ending from './screens/ending';
@@ -75,6 +76,7 @@ class AppRouter extends Component {
                                                       viewHeight={this.state.height}
                                                       viewWidth={this.state.width}/>}/>
             <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} setRoomCode={this.setRoomCode.bind(this)} /> } /> {/* might need to move setRoomCode later */}
+            <Route path="/splitting/" component={Splitting} />
             <Route path="/waiting/" render={(props) => <Waiting {...props} isHost={this.state.isHost} /> } />
             <Route path="/ending/" component={Ending} />
             <Route path="/bill/" component={Bill} />
