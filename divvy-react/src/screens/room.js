@@ -6,17 +6,27 @@ import { Link } from 'react-router-dom';
 class Room extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      images: props.images,
-      modals: {},
-    };
 
     this.setModal = this.setModal.bind(this);
+    this.renderItems = this.renderItems.bind(this);
   }
 
   setModal(index) {
-    this.state.modal[index] = true;
+    this.setState({
+      activeModal: index
+    })
     this.forceUpdate();
+  }
+
+  renderItems() {
+    return (
+      this.state.images.map(function(image, i) {
+       return (
+          <div className="row" onClick={this.setModal(i)}>
+            <p>Stub Text</p>
+            {(this.props.activeModal == i ? <ItemModal /> : null)}
+          </div>);
+      }));
   }
 
   render() {
@@ -25,13 +35,7 @@ class Room extends React.Component {
           <h1>Divvy Items</h1>
           <div className="row">
           <div className="container">
-            {this.state.images.map(function(image, i) {
-              return (
-                <div className="row" onClick={this.setModal(i)}>
-                  <img src={image} />
-                  {(this.state.modal[index] ? <ItemModal /> : null)}
-                </div>);
-            })}
+            {this.renderItems()}
           </div>
         </div>
           <Link to='/waiting'><Button variant="success">Finish</Button></Link>
