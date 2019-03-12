@@ -51,15 +51,17 @@ class AppRouter extends Component {
             />
           </Helmet>
           <DivvyNav/>
-          <Route path="/" exact component={Index} />
-          <Route path="/crop/" render={(props) => 
-                                          <HostCrop {...props} 
-                                                    viewHeight={this.state.height}
-                                                    viewWidth={this.state.width}/>}/>
-          {/* stubs */} 
-          <Route path="/room/" component={Room} />
-          <Route path="/setup/" component={Setup} />
-          <Route path="/waiting/" component={Stub} />
+          <div className="container-fluid">
+            <Route path="/" exact component={Index} />
+            <Route path="/crop/" render={(props) => 
+                                            <HostCrop {...props} 
+                                                      viewHeight={this.state.height}
+                                                      viewWidth={this.state.width}/>}/>
+            {/* stubs */} 
+            <Route path="/room/" component={Room} />
+            <Route path="/setup/" component={Setup} />
+            <Route path="/waiting/" component={Stub} />
+          </div>
         </div>
       </Router>
     );
