@@ -19,20 +19,28 @@ class Splitting extends React.Component {
     imgs.push(image5);
     this.state = { 
         activeModal: -1,
-        images: imgs
+        images: imgs,
+        showModal: false
     };
     this.getSetModal = this.getSetModal.bind(this);
+  }
+
+  hideModal() {
+    console.log("oh");
+     this.setState({showModal: false});
   }
 
   getSetModal(index) {
       return function () {
         this.setState({
-            activeModal: index
+            activeModal: index,
+            showModal: true
           })
       }.bind(this)
   }
 
     render() {
+      console.log("render");
         return (
             <div>
               <h1>Divvy Items</h1>
@@ -42,10 +50,11 @@ class Splitting extends React.Component {
                         return (
                             <div className="row" onClick={this.getSetModal(i)}>
                                 <div><img src={image}/></div>
-                                {(this.state.activeModal == i ? <div><ItemModal /></div> : null)}
+                                {/*(this.state.activeModal == i ? <div><ItemModal showModal={() => {this.state.showModal}} onHide={this.hideModal.bind(this)} onButtonClick={this.hideModal.bind(this)} /></div> : null)*/}
                             </div>);
                         }, this)}
                 </div>
+                <ItemModal showModal={this.state.showModal} onHide={this.hideModal.bind(this)} onButtonClick={this.hideModal.bind(this)} />
                 </div>
               <Link to='/waiting'><Button variant="success">Finish</Button></Link>
             </div>);
