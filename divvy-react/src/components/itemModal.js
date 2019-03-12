@@ -15,8 +15,8 @@ class ItemModal extends React.Component {
         <Container>
           <Form>
             <Form.Group as={Row}>
-              <Form.Label column xs="8">This item costs:</Form.Label>
-              <Col xs="4">
+              <Form.Label column xs="6">This item costs:</Form.Label>
+              <Col xs="6">
                 <Form.Control type="number"
                   min="0"
                   step="0.01"
@@ -28,18 +28,18 @@ class ItemModal extends React.Component {
           </Form>
           <hr></hr>
           <Row className="pb-2">
-            <Col>Compated to others, you had:</Col>
+            <Col>Compared to others, you had:</Col>
           </Row>
-          <Row p-5>
-            <Col className="justify-content-center">
-              <ButtonToolbar>
-                <ToggleButtonGroup type="radio" name="ratio" size="sm">
-                  <ToggleButton variant="danger" value={1} style={btnStyle}>Much Less</ToggleButton>
-                  <ToggleButton variant="warning" value={2} style={btnStyle}>Less</ToggleButton>
-                  <ToggleButton variant="success" value={3} style={btnStyle}>Average</ToggleButton>
-                  <ToggleButton variant="warning" value={4} style={btnStyle}>More</ToggleButton>
-                  <ToggleButton variant="danger" value={5} style={btnStyle}>Much More</ToggleButton>
-                  <ToggleButton variant="info" value={-1} style={btnStyle}>All</ToggleButton>
+          <Row>
+            <Col >
+              <ButtonToolbar className="justify-content-center">
+                <ToggleButtonGroup vertical className="btn-block" type="radio" name="ratio" size="lg">
+                  <ToggleButton className="ItemModalButton mb-4" variant="info" value={-1} >All</ToggleButton>
+                  <ToggleButton className="ItemModalButton" variant="danger" value={1} >Much Less</ToggleButton>
+                  <ToggleButton className="ItemModalButton" variant="warning" value={2} >Less</ToggleButton>
+                  <ToggleButton className="ItemModalButton" variant="success" value={3} >Average</ToggleButton>
+                  <ToggleButton className="ItemModalButton" variant="warning" value={4} >More</ToggleButton>
+                  <ToggleButton className="ItemModalButton" variant="danger" value={5} >Much More</ToggleButton>
                 </ToggleButtonGroup>
               </ButtonToolbar>
             </Col>
@@ -54,10 +54,5 @@ class ItemModal extends React.Component {
   }
 }
 
-const btnStyle = {
-  'display': 'flex',
-  'justify-content': 'center',
-  'align-items': 'center',
-};
 export default ItemModal;
 

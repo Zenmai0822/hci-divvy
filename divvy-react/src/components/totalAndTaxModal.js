@@ -11,17 +11,20 @@ class TotalAndTaxModal extends React.Component {
     this.state = {
       billSubtotal: 0,
       billTaxTips: 0,
-      billTotal: 0
     }
-    this.updateTotal = this.updateTotal.bind(this);
+    this.updateSubtotal = this.updateSubtotal.bind(this);
+    this.updateTips= this.updateTips.bind(this);
   }
 
-  updateTotal(event) {
-    console.log(event);
+  updateSubtotal(event) {
     this.setState({
-      billSubtotal: event.target.billSubtotal,
-      billTaxTips: event.target.billTaxTips,
-      billTotal: this.state.billSubtotal + this.state.billTaxTips
+      billSubtotal: event.target.value,
+    })
+  }
+
+  updateTips(event) {
+    this.setState({
+      billTaxTips: event.target.value,
     })
   }
 
@@ -43,8 +46,7 @@ class TotalAndTaxModal extends React.Component {
                   data-number-to-fixed="2"
                   data-number-stepfactor="100"
                   placeholder="$"
-                  //value={this.state.billSubtotal}
-                  //onChange={this.updateTotal}
+                  onChange={this.updateSubtotal}
                   ></Form.Control>
               </Col>
             </Form.Group>
@@ -57,15 +59,10 @@ class TotalAndTaxModal extends React.Component {
                   data-number-to-fixed="2"
                   data-number-stepfactor="100"
                   placeholder="$"
-                  //value={this.state.billTaxTips}
-                  //onChange={this.updateTotal}
+                  onChange={this.updateTips}
                 ></Form.Control>
               </Col>
             </Form.Group>
-            <Row>
-              <Col xs="6"><b>Bill Total: </b></Col>
-              <Col xs="6" className="text-right">${this.state.billTotal}</Col>
-            </Row>
           </Form>
         </Container>
       </Modal.Body>
@@ -77,10 +74,5 @@ class TotalAndTaxModal extends React.Component {
   }
 }
 
-const btnStyle = {
-  'display': 'flex',
-  'justify-content': 'center',
-  'align-items': 'center',
-};
 export default TotalAndTaxModal;
 
