@@ -19,8 +19,8 @@ class CanvasImgCropper extends Component {
   handleClick(e) {
   e.preventDefault();
   let point = {
-                x: e.nativeEvent.layerX,
-                y: e.nativeEvent.layerY,
+                x: e.pageX - e.target.offsetLeft,
+                y: e.pageY - e.target.offsetTop,
               }
   if(this.state.topLeft == null) {
     this.setState({
