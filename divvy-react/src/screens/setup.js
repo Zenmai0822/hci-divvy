@@ -6,6 +6,7 @@ class Setup extends React.Component {
   constructor(props) {
     super(props);
 
+    props.setHost();
     /* TODO include callback props for moveBackward and moveForward */
 
     /* TODO maybe replace list of strings with a list of component? */
