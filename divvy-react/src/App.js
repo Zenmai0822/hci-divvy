@@ -8,6 +8,10 @@ import Index from './screens/index';
 import HostCrop from './screens/hostCrop';
 import Room from './screens/room';
 import Setup from './screens/setup';
+import Bill from './screens/bill';
+import Splitting from './screens/splitting';
+import Ending from './screens/ending';
+import Finish from './screens/finish';
 import DivvyNav from './components/navbar';
 
 function Stub() {
@@ -18,7 +22,12 @@ function Stub() {
 class AppRouter extends Component {
   constructor(props) {
     super(props);
-    this.state = { width: 0, height: 0 };
+    this.state = { 
+      width: 0, 
+      height: 0, 
+      isHost: false,
+      roomCode: null  /* need this for displaying the roomCode in the nav */
+    };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
@@ -38,6 +47,19 @@ class AppRouter extends Component {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 
+  setHost() {
+    this.setState({ isHost: true });
+  }
+
+  // TODO call this if user backs out of host flow
+  setNonHost() {
+    this.setState({ isHost: false })
+  }
+
+  setRoomCode(roomCode) {
+    this.setState({ roomCode: roomCode }); 
+  }
+
   render() {
     return (
       <Router>
@@ -51,15 +73,21 @@ class AppRouter extends Component {
             />
           </Helmet>
           <DivvyNav/>
-          <Route path="/" exact component={Index} />
-          <Route path="/crop/" render={(props) => 
-                                          <HostCrop {...props} 
-                                                    viewHeight={this.state.height}
-                                                    viewWidth={this.state.width}/>}/>
-          {/* stubs */} 
-          <Route path="/room/" component={Room} />
-          <Route path="/setup/" component={Setup} />
-          <Route path="/waiting/" component={Stub} />
+          <div className="container-fluid">
+            <Route path="/" exact component={Index} />
+            <Route path="/crop/" render={(props) => 
+                                            <HostCrop {...props} 
+                                                      viewHeight={this.state.height}
+                                                      viewWidth={this.state.width}/>}/>
+            <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} setRoomCode={this.setRoomCode.bind(this)} /> } /> {/* might need to move setRoomCode later */}
+            <Route path="/setup/" render={(props) => <Setup {...props} setHost={this.setHost.bind(this)} /> } />
+            {/* stubs */} 
+            <Route path="/waiting/" component={Stub} />
+            <Route path="/ending/" component={Ending} />
+            <Route path="/bill/" component={Bill} />
+            <Route path="/finish/" component={Finish} />
+            <Route path="/splitting/" component = {Splitting} />
+          </div>
         </div>
       </Router>
     );
