@@ -26,6 +26,17 @@
   color: #61dafb;
 }
 
+.btn-group-vertical>.btn { 
+  border-radius: 6px !important; 
+}
+
+.ItemModalButton {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  width: '100%';
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
