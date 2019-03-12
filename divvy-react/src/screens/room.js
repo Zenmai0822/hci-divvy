@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 
+import Splitting from './splitting';
+
 class Room extends React.Component {
   constructor(props) {
     super(props);
@@ -20,9 +22,6 @@ class Room extends React.Component {
   render() {
     return (
         <div>
-          <h1>Divvy Items</h1>
-          <Link to='/waiting'><Button variant="success">Finish</Button></Link>
-    
           <Modal show={this.state.showHostPrompt} onHide={this.handleClose.bind(this)} centered>
             <Modal.Header closeButton>
               <Modal.Title>Share this room code!</Modal.Title>
@@ -32,6 +31,7 @@ class Room extends React.Component {
               <Button variant="secondary" onClick={this.handleClose.bind(this)}>Close</Button>
             </Modal.Footer>
           </Modal>
+          <Splitting />
         </div>
       );
   }
