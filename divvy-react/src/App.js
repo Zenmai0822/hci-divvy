@@ -67,7 +67,7 @@ class AppRouter extends Component {
             />
           </Helmet>
           <DivvyNav roomCode={this.state.roomCode} />
-          <div className="container-fluid">
+          <div className="container-fluid screen">
             <Route path="/" exact component={Index} />
             <Route path="/crop/" render={(props) => 
                                             <HostCrop {...props} 

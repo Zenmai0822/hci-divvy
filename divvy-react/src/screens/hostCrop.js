@@ -10,7 +10,7 @@ class HostCrop extends Component {
   
     props.setHost();
 
-    this.instructionsText=["instructions1", "instructions2", "instructions3"];
+    this.instructionsText=["Input tax & total", "Crop image", "Separate line items"];
   
     this.state = {
       blob: null,

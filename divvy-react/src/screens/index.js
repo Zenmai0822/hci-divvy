@@ -8,7 +8,7 @@ class Index extends Component {
   render() {
     return (
         <div>
-          <h1>Hello, welcome to Divvy</h1>
+          <h2>Welcome to Divvy!</h2>
           <Upload />
           <div className="divvy-join">
             <form>
