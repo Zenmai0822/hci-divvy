@@ -8,6 +8,7 @@ import Index from './screens/index';
 import HostCrop from './screens/hostCrop';
 import Room from './screens/room';
 import Setup from './screens/setup';
+import Splitting from './screens/splitting';
 import Bill from './screens/bill';
 import Ending from './screens/ending';
 import Finish from './screens/finish';
@@ -81,6 +82,7 @@ class AppRouter extends Component {
             <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} setRoomCode={this.setRoomCode.bind(this)} /> } /> {/* might need to move setRoomCode later */}
             <Route path="/setup/" render={(props) => <Setup {...props} setHost={this.setHost.bind(this)} /> } />
             {/* stubs */} 
+            <Route path="/splitting/" component={Splitting} />
             <Route path="/waiting/" component={Stub} />
             <Route path="/ending/" component={Ending} />
             <Route path="/bill/" component={Bill} />
