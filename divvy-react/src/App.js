@@ -7,15 +7,11 @@ import Index from './screens/index';
 
 import HostCrop from './screens/hostCrop';
 import Room from './screens/room';
+import Waiting from './screens/waiting';
 import Bill from './screens/bill';
 import Ending from './screens/ending';
 import Finish from './screens/finish';
 import DivvyNav from './components/navbar';
-
-function Stub() {
-  return <h2>Stub</h2>;
-}
-
 
 class AppRouter extends Component {
   constructor(props) {
@@ -70,7 +66,7 @@ class AppRouter extends Component {
               crossorigin="anonymous"
             />
           </Helmet>
-          <DivvyNav/>
+          <DivvyNav roomCode={this.state.roomCode} />
           <div className="container-fluid">
             <Route path="/" exact component={Index} />
             <Route path="/crop/" render={(props) => 
@@ -79,8 +75,7 @@ class AppRouter extends Component {
                                                       viewHeight={this.state.height}
                                                       viewWidth={this.state.width}/>}/>
             <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} setRoomCode={this.setRoomCode.bind(this)} /> } /> {/* might need to move setRoomCode later */}
-            {/* stubs */} 
-            <Route path="/waiting/" component={Stub} />
+            <Route path="/waiting/" render={(props) => <Waiting {...props} isHost={this.state.isHost} /> } />
             <Route path="/ending/" component={Ending} />
             <Route path="/bill/" component={Bill} />
             <Route path="/finish/" component={Finish} />
