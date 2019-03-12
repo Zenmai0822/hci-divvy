@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import CanvasImgCropper from '../components/canvasImgCropper';
 import ItemCropper from '../components/itemCropper';
-
+import ItemModal from '../components/itemModal';
+  
 class HostCrop extends Component {
    constructor(props) {
     super(props);
@@ -31,7 +32,7 @@ class HostCrop extends Component {
       this.props.history.push("/");
     }
   
-    // moving backward means go back to crop
+    // moving backward means go back to crop / blob is null
     this.setState({ 
       blob: null,  
       curInstructionInd: this.state.curInstructionInd - 1 
@@ -42,7 +43,7 @@ class HostCrop extends Component {
       this.props.history.push("/room");
     }
     
-    if (this.state.blob == null) {
+    if (this.state.curInstructionInd > 0 && this.state.blob == null) {
       // TODO update with better blob?
       this.setState({ blob: this.props.location.state.file });
     }
@@ -76,6 +77,7 @@ class HostCrop extends Component {
     let cropper = this.genCropper();
     return (
         <div className="host-setup">
+          <ItemModal showModal={this.state.curInstructionInd == 0} onHide={this.moveBackward.bind(this)} onButtonClick={this.moveForward.bind(this)} />
           <div className="host-cropping">
             {cropper}  
           </div>

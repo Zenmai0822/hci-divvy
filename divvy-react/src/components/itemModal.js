@@ -3,19 +3,23 @@ import Button from 'react-bootstrap/Button';
 import { Modal } from 'react-bootstrap';
 
 class ItemModal extends React.Component {
-  contructor(props) {
+  constructor(props) {
     super(props);
   }
 
   render() {
-    <Modal show={this.props.showModal && true} centered>
+    return <div>
+    <Modal show={this.props.showModal && true} onHide={this.props.onHide} centered>
       <Modal.Header closeButton>
         <Modal.Title>This is a stub</Modal.Title>
       </Modal.Header>
       <Modal.Body>Wow stubs</Modal.Body>
       <Modal.Footer>
-        <Button variant="primary">Close?</Button>
+        <Button variant="primary" onClick={this.props.onButtonClick}>Close?</Button>
       </Modal.Footer>
-    </Modal>
+    </Modal></div>
   }
 }
+
+export default ItemModal;
+
