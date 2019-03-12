@@ -3,10 +3,6 @@ import logo from '../logo.svg';
 import { Navbar } from 'react-bootstrap';
 
 class DivvyNav extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   genNavText() {
     return this.props.roomCode && <Navbar.Text>Room: {this.props.roomCode}</Navbar.Text>;
   }

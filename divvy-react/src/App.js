@@ -14,11 +14,6 @@ import Ending from './screens/ending';
 import Finish from './screens/finish';
 import DivvyNav from './components/navbar';
 
-function Stub() {
-  return <h2>Stub</h2>;
-}
-
-
 class AppRouter extends Component {
   constructor(props) {
     super(props);
