@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 class Index extends Component {
   render() {
     return (
-        <div className="screen">
-          <h1>Hello, welcome to Divvy</h1>
+        <div>
+          <h2>Welcome to Divvy!</h2>
           <Upload />
           <div className="divvy-join">
             <form>

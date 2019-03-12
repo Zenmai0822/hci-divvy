@@ -7,17 +7,12 @@ import Index from './screens/index';
 
 import HostCrop from './screens/hostCrop';
 import Room from './screens/room';
-import Setup from './screens/setup';
 import Splitting from './screens/splitting';
+import Waiting from './screens/waiting';
 import Bill from './screens/bill';
 import Ending from './screens/ending';
 import Finish from './screens/finish';
 import DivvyNav from './components/navbar';
-
-function Stub() {
-  return <h2>Stub</h2>;
-}
-
 
 class AppRouter extends Component {
   constructor(props) {
@@ -72,18 +67,17 @@ class AppRouter extends Component {
               crossorigin="anonymous"
             />
           </Helmet>
-          <DivvyNav/>
-          <div className="container-fluid">
+          <DivvyNav roomCode={this.state.roomCode} />
+          <div className="container-fluid screen">
             <Route path="/" exact component={Index} />
             <Route path="/crop/" render={(props) => 
                                             <HostCrop {...props} 
+                                                      setHost={this.setHost.bind(this)}
                                                       viewHeight={this.state.height}
                                                       viewWidth={this.state.width}/>}/>
             <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} setRoomCode={this.setRoomCode.bind(this)} /> } /> {/* might need to move setRoomCode later */}
-            <Route path="/setup/" render={(props) => <Setup {...props} setHost={this.setHost.bind(this)} /> } />
-            {/* stubs */} 
             <Route path="/splitting/" component={Splitting} />
-            <Route path="/waiting/" component={Stub} />
+            <Route path="/waiting/" render={(props) => <Waiting {...props} isHost={this.state.isHost} /> } />
             <Route path="/ending/" component={Ending} />
             <Route path="/bill/" component={Bill} />
             <Route path="/finish/" component={Finish} />
