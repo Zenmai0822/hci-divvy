@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import CanvasImgCropper from '../components/canvasImgCropper';
 import ItemCropper from '../components/itemCropper';
-import ItemModal from '../components/itemModal';
+import TotalAndTaxModal from '../components/totalAndTaxModal';
   
 class HostCrop extends Component {
    constructor(props) {
@@ -77,7 +77,7 @@ class HostCrop extends Component {
     let cropper = this.genCropper();
     return (
         <div className="host-setup">
-          <ItemModal showModal={this.state.curInstructionInd == 0} onHide={this.moveBackward.bind(this)} onButtonClick={this.moveForward.bind(this)} />
+          <TotalAndTaxModal showModal={this.state.curInstructionInd == 0} onHide={this.moveBackward.bind(this)} onButtonClick={this.moveForward.bind(this)} />
           <div className="host-cropping">
             {cropper}  
           </div>
