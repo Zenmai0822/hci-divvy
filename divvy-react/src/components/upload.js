@@ -22,7 +22,7 @@ class Upload extends Component {
   if(this.state.files.length > 0 )  {
     console.log(this.state.files[0]);
     return <Redirect to={{
-                      pathname: '/crop/',
+                      pathname: '/setup/',
                       state: {
                         file: this.state.files[0]
                       }

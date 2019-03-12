@@ -58,7 +58,10 @@ class AppRouter extends Component {
                                                     viewWidth={this.state.width}/>}/>
           {/* stubs */} 
           <Route path="/room/" component={Room} />
-          <Route path="/setup/" component={Setup} />
+          <Route path="/setup/" render={(props) => 
+                                          <Setup {...props} 
+                                                    viewHeight={this.state.height}
+                                                    viewWidth={this.state.width}/>}/>
           <Route path="/waiting/" component={Stub} />
         </div>
       </Router>

@@ -2,6 +2,8 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
+import HostCrop from './hostCrop';
+
 class Setup extends React.Component {
   constructor(props) {
     super(props);
@@ -33,12 +35,14 @@ class Setup extends React.Component {
   render() {
     let text = this.instructionsText[this.state.curInstructionInd];
     return (
-        <div>
-          <h1>Host - Set up Divvy</h1>
+        <div className="screen host-setup">
+          <div className="host-cropping">
+            <HostCrop {...this.props} />             
+          </div>
           <div className="host-instructions">
-            <Button variant="info" onClick={this.moveBackward.bind(this)}>left-arrow</Button>
+            <Button variant="info" onClick={this.moveBackward.bind(this)}>back</Button>
             <span className="host-instructions-text">{text}</span>
-            <Button variant="info" onClick={this.moveForward.bind(this)}>right-arrow</Button>
+            <Button variant="info" onClick={this.moveForward.bind(this)}>next</Button>
           </div>
         </div>
       );
