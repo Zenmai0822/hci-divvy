@@ -66,7 +66,7 @@ class AppRouter extends Component {
               crossorigin="anonymous"
             />
           </Helmet>
-          <DivvyNav/>
+          <DivvyNav roomCode={this.state.roomCode} />
           <div className="container-fluid">
             <Route path="/" exact component={Index} />
             <Route path="/crop/" render={(props) => 
@@ -75,8 +75,7 @@ class AppRouter extends Component {
                                                       viewHeight={this.state.height}
                                                       viewWidth={this.state.width}/>}/>
             <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} setRoomCode={this.setRoomCode.bind(this)} /> } /> {/* might need to move setRoomCode later */}
-            {/* stubs */} 
-            <Route path="/waiting/" component={Waiting} />
+            <Route path="/waiting/" render={(props) => <Waiting {...props} isHost={this.state.isHost} /> } />
             <Route path="/ending/" component={Ending} />
             <Route path="/bill/" component={Bill} />
             <Route path="/finish/" component={Finish} />
