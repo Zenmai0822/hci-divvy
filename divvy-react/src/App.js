@@ -8,6 +8,9 @@ import Index from './screens/index';
 import HostCrop from './screens/hostCrop';
 import Room from './screens/room';
 import Setup from './screens/setup';
+import Bill from './screens/bill';
+import Ending from './screens/ending';
+import Finish from './screens/finish';
 import DivvyNav from './components/navbar';
 
 function Stub() {
@@ -78,6 +81,9 @@ class AppRouter extends Component {
           <Route path="/setup/" render={(props) => <Setup {...props} setHost={this.setHost.bind(this)} /> } />
           {/* stubs */} 
           <Route path="/waiting/" component={Stub} />
+          <Route path="/ending/" component={Ending} />
+          <Route path="/bill/" component={Bill} />
+          <Route path="/finish/" component={Finish} />
         </div>
       </Router>
     );
