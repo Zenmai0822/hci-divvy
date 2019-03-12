@@ -1,5 +1,5 @@
 @import './screens/index.css';
-@import './screens/setup.css';
+@import './screens/hostCrop.css';
 
 .App {
   text-align: center;
