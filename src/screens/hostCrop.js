@@ -78,14 +78,15 @@ class HostCrop extends Component {
     return (
         <div className="host-setup">
           <TotalAndTaxModal showModal={this.state.curInstructionInd == 0} onHide={this.moveBackward.bind(this)} onButtonClick={this.moveForward.bind(this)} />
-          <div className="host-cropping">
-            {cropper}  
-          </div>
           {/* TODO fix styles here */}
           <div className="host-instructions">
             <Button variant="info" onClick={this.moveBackward.bind(this)}>back</Button>
             <span className="host-instructions-text">{text}</span>
             <Button variant="info" onClick={this.moveForward.bind(this)}>next</Button>
+          </div>
+          <hr />
+          <div className="host-cropping">
+            {cropper}  
           </div>
         </div>
       );

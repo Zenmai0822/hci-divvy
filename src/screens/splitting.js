@@ -48,7 +48,7 @@ class Splitting extends React.Component {
                 <div className="container">
                     {this.state.images.map(function(image, i) {
                         return (
-                            <div className="row" onClick={this.getSetModal(i)}>
+                            <div className="row divvy-item" onClick={this.getSetModal(i)}>
                                 <div><img src={image}/></div>
                                 {/*(this.state.activeModal == i ? <div><ItemModal showModal={() => {this.state.showModal}} onHide={this.hideModal.bind(this)} onButtonClick={this.hideModal.bind(this)} /></div> : null)*/}
                             </div>);
