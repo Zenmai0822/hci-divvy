@@ -14,7 +14,7 @@ class Index extends Component {
             <form>
               <input type="text" name="roomCode" className="input-roomcode" placeholder="Room code" />
               <br />
-              <Link to='/room'><Button className="btn-join" variant="primary" size="lg" block>Join</Button></Link>
+              <Link to='/room'><Button className="btn-join" variant="primary" size="lg" block>Join existing room</Button></Link>
             </form>
           </div>
         </div>

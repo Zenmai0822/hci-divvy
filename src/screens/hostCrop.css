@@ -1,7 +1,12 @@
-.host-setup {
-  text-align: center;
+.host-cropping {
+  margin-top: 20px;
 }
 
 .host-instructions-text {
   padding: 20px;
 }
+
+.host-setup {
+  text-align: center;
+}
+
