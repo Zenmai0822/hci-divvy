@@ -44,7 +44,7 @@ class Ending extends React.Component {
       <div>
         <h1>Room Members Finished:</h1>
           <div>
-            <p>{this.state.num}/{this.state.denom}</p>
+            <h1>{this.state.num}/{this.state.denom}</h1>
           </div>
         <Link to='/bill'><Button disabled={this.state.num != this.state.denom} variant="success">End Divvy!</Button></Link>
       </div>

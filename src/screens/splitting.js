@@ -30,11 +30,12 @@ class Splitting extends React.Component {
      this.setState({showModal: false});
   }
 
-  getSetModal(index) {
+  getSetModal(image, index) {
       return function () {
         this.setState({
             activeModal: index,
-            showModal: true
+            showModal: true,
+            modalImage: image,
           })
       }.bind(this)
   }
@@ -48,13 +49,13 @@ class Splitting extends React.Component {
                 <div className="container">
                     {this.state.images.map(function(image, i) {
                         return (
-                            <div className="row divvy-item" onClick={this.getSetModal(i)}>
+                            <div className="row divvy-item" onClick={this.getSetModal(image, i)}>
                                 <div><img src={image}/></div>
                                 {/*(this.state.activeModal == i ? <div><ItemModal showModal={() => {this.state.showModal}} onHide={this.hideModal.bind(this)} onButtonClick={this.hideModal.bind(this)} /></div> : null)*/}
                             </div>);
                         }, this)}
                 </div>
-                <ItemModal showModal={this.state.showModal} onHide={this.hideModal.bind(this)} onButtonClick={this.hideModal.bind(this)} />
+                <ItemModal receiptImage={this.state.modalImage} showModal={this.state.showModal} onHide={this.hideModal.bind(this)} onButtonClick={this.hideModal.bind(this)} />
                 </div>
               <Link to='/waiting'><Button variant="success">Finish</Button></Link>
             </div>);
