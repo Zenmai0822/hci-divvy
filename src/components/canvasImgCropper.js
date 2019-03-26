@@ -6,10 +6,7 @@ class CanvasImgCropper extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topLeft: null,
-      topRight: null,
-      botLeft: null,
-      botRight: null,
+      points: [],
       blob: null
     };
     this.handleClick = this.handleClick.bind(this);
@@ -18,28 +15,13 @@ class CanvasImgCropper extends Component {
   }
   handleClick(e) {
   e.preventDefault();
-  let point = {
+  const point = {
                 x: e.pageX - e.target.offsetLeft,
                 y: e.pageY - e.target.offsetTop,
-              }
-  if(this.state.topLeft == null) {
-    this.setState({
-      topLeft: point
-    });
-  }else if(this.state.topRight == null) {
-    this.setState({
-      topRight: point
-    });
-
-  }else if(this.state.botRight == null) {
-    this.setState({
-      botRight: point
-    });
-  }else {
-    this.setState({
-      botLeft: point
-    });
-  }
+              };
+  const points = this.state.points;
+  points.push(point);
+  this.setState({points: points});
   console.log('The CANVAS was clicked at.');
   console.log(e.nativeEvent.layerX + " " + e.nativeEvent.layerY);
   }
@@ -48,29 +30,75 @@ class CanvasImgCropper extends Component {
       blob: URL.createObjectURL(blob)
     });
   }
+  minPoints(points, compareX, minTwo) {
+    if(points.length === 0) {
+      return []
+    }
+    let minPoint = points[0];
+    let minPointIndex = 0;
+    for(let i = 1; i < points.length; i++){
+      if ((points[i].x < minPoint.x && compareX) || (points[i].y < minPoint.y && !compareX)) {
+        minPoint = points[i];
+        minPointIndex = i;
+      }
+    }
+    if(minTwo) {
+      const newPoints = points.filter((_, i) => minPointIndex !== i);
+      let minSecond = newPoints[0];
+      for(let i = 1; i < newPoints.length; i++){
+        if((newPoints[i].x < minSecond.x && compareX) || (newPoints[i].y < minSecond.y && !compareX)) {
+          minSecond = newPoints[i];
+        }
+      }
+      return [minPoint, minSecond];
+    }
+    return [minPoint];
+  }
+  maxPoints(points, compareX, maxTwo) {
+    if(points.length === 0) {
+      return []
+    }
+    let maxPoint = points[0];
+    let maxPointIndex = 0;
+    for(let i = 1; i < points.length; i++){
+      if((points[i].x > maxPoint.x && compareX) || (points[i].y > maxPoint.y && !compareX)) {
+        maxPoint = points[i];
+        maxPointIndex = i;
+      }
+    }
+    if(maxTwo) {
+      const newPoints = points.filter((_, i) => maxPointIndex !== i);
+      let maxSecond = newPoints[0];
+      for(let i = 1; i < newPoints.length; i++){
+        if((newPoints[i].x > maxSecond.x && compareX) || (newPoints[i].y > maxSecond.y && !compareX)) {
+          maxSecond = newPoints[i];
+        }
+      }
+      return [maxPoint, maxSecond];
+    }
+    return [maxPoint];
+  }
   render() {
-    if(this.state.topLeft == null || 
-       this.state.topRight == null ||
-       this.state.botLeft == null ||
-       this.state.botRight == null ) {
+    if(this.state.points.length < 4 ) {
       return <CanvasCropCorners
               handleClick={this.handleClick} 
               width={this.props.viewWidth}
               height={this.props.viewHeight}
               imageCallback={this.cropCallback}
               image={URL.createObjectURL(this.props.file)}
-              topLeft={this.state.topLeft}
-              topRight={this.state.topRight}
-              botLeft={this.state.botLeft}
-              botRight={this.state.botRight}
+              points={this.state.points}
              />;
     }
     else{
-      let orignalHeight = Math.min(this.state.botRight.y - this.state.topRight.y,
-                               this.state.botLeft.y - this.state.topLeft.y);
-      let orignalWidth = Math.min(this.state.topRight.x - this.state.topLeft.x,
-                               this.state.botRight.x - this.state.botLeft.x);
-      let scaledHeight = (orignalHeight * this.props.viewWidth)/orignalWidth
+      const topLeft = this.minPoints(this.minPoints(this.state.points, true, true), false, false)[0];
+      const topRight = this.minPoints(this.maxPoints(this.state.points, true, true), false, false)[0];
+      const botRight = this.maxPoints(this.maxPoints(this.state.points, true, true), false, false)[0];
+      const botLeft = this.maxPoints(this.minPoints(this.state.points, true, true), false, false)[0];
+       const originalHeight = Math.min(botRight.y - topRight.y,
+                               botLeft.y - topLeft.y);
+      const originalWidth = Math.min(topRight.x - topLeft.x,
+                               botRight.x - botLeft.x);
+      const scaledHeight = (originalHeight * this.props.viewWidth)/originalWidth;
       return <PerspectiveCrop
               handleClick={this.handleClick} 
               image={this.state.blob}
@@ -78,15 +106,15 @@ class CanvasImgCropper extends Component {
               height={scaledHeight}
               imageCallback={this.props.imageCallback}
               anchors={{
-                TL:this.state.topLeft,     
-                TR:this.state.topRight,
-                BR:this.state.botRight,
-                BL:this.state.botLeft,
+                TL:topLeft,
+                TR:topRight,
+                BR:botRight,
+                BL:botLeft
               }}
               unwarped={{
                 TL:{x:0,y:0},
-                TR:{x:this.props.viewWidth,y:0},
-                BR:{x:this.props.viewWidth,y:scaledHeight},
+                TR:{x:this.props.viewWidth, y:0},
+                BR:{x:this.props.viewWidth, y:scaledHeight},
                 BL:{x:0,y:scaledHeight},
               }}
             />; 

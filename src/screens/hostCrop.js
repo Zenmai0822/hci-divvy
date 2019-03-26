@@ -10,7 +10,7 @@ class HostCrop extends Component {
   
     props.setHost();
 
-    this.instructionsText=["Input tax & total", "Crop image", "Separate line items"];
+    this.instructionsText=["Input tax & total", "Tap the corners around the items section of the receipt", "Separate line items"];
   
     this.state = {
       blob: null,
@@ -28,7 +28,7 @@ class HostCrop extends Component {
   }
 
   moveBackward() {
-    if (this.state.curInstructionInd == 0) {
+    if (this.state.curInstructionInd === 0) {
       this.props.history.push("/");
     }
   
@@ -39,7 +39,7 @@ class HostCrop extends Component {
     });
   } 
   moveForward() {
-    if (this.state.curInstructionInd == this.instructionsText.length - 1) {
+    if (this.state.curInstructionInd === this.instructionsText.length - 1) {
       this.props.history.push("/room");
     }
     
@@ -77,9 +77,9 @@ class HostCrop extends Component {
     let cropper = this.genCropper();
     return (
         <div className="host-setup">
-          <TotalAndTaxModal showModal={this.state.curInstructionInd == 0} onHide={this.moveBackward.bind(this)} onButtonClick={this.moveForward.bind(this)} />
+          <TotalAndTaxModal showModal={this.state.curInstructionInd === 0} onHide={this.moveBackward.bind(this)} onButtonClick={this.moveForward.bind(this)} />
           {/* TODO fix styles here */}
-          <div className="host-instructions">
+          <div className="d-flex justify-content-around align-items-center host-instructions">
             <Button variant="info" onClick={this.moveBackward.bind(this)}>back</Button>
             <span className="host-instructions-text">{text}</span>
             <Button variant="info" onClick={this.moveForward.bind(this)}>next</Button>
