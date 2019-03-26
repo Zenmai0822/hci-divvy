@@ -1,10 +1,51 @@
-import React, { Component } from 'react';
-import { Modal, ButtonGroup, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+import React from 'react';
+import classNames from 'classnames';
+import { Modal, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 
 class ItemModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cost: props.cost,
+      amount: props.amount,
+    };
+    this.onAmountPressed = this.onAmountPressed.bind(this);
+    this.toggleButton = this.toggleButton.bind(this);
+  }
+  componentWillReceiveProps(nextProps, nextContext) {
+    if(nextProps.cost !== this.state.cost || nextProps.amount !== this.state.amount) {
+      this.setState({
+        cost: nextProps.cost,
+        amount: nextProps.amount
+      })
+    }
+  }
+
+  onAmountPressed(e) {
+    this.setState({amount: e.target.value})
+  }
+  toggleButton(type, value, text) {
+
+    const classes = classNames('ItemModalButton', {
+      'mb-4': value === -1,
+      'active': this.state.amount === value
+    });
+    return <ToggleButton
+      className={classes}
+      variant={type}
+      value={value}
+      onChange={this.onAmountPressed}>{text}</ToggleButton>
+  }
   render() {
+    const buttons = [{type: 'info', value: -1, text: "All"},
+      {type: 'danger', value: 1, text: "Much Less"},
+      {type: 'warning', value: 2, text: "Less"},
+      {type: 'success', value: 3, text: "Average"},
+      {type: 'warning', value: 4, text: "More"},
+      {type: 'danger', value: 5, text: "Much More"}
+    ].map(val =>  this.toggleButton(val.type,val.value,val.text));
     return <div> 
       <Modal show={this.props.showModal} onHide={this.props.onHide} >
         <Modal.Header closeButton>
@@ -15,7 +56,7 @@ class ItemModal extends React.Component {
           <Container>
             <Form>
               <Form.Group as={Row}>
-                <div><img src={this.props.receiptImage}/></div>
+                <div><img alt='receipt item image' src={this.props.receiptImage}/></div>
                 <Form.Label column xs="6">This item costs:</Form.Label>
                 <Col xs="6">
                   <Form.Control type="number"
@@ -23,11 +64,13 @@ class ItemModal extends React.Component {
                     step="0.01"
                     data-number-to-fixed="2"
                     data-number-stepfactor="100"
-                    placeholder="$"></Form.Control>
+                    placeholder="$"
+                    value={this.state.cost}
+                    onChange={(e) => this.setState({cost: e.target.value})}/>
                 </Col>
               </Form.Group>
             </Form>
-            <hr></hr>
+            <hr/>
             <Row className="pb-2">
               <Col>Compared to others, you had:</Col>
             </Row>
@@ -35,12 +78,7 @@ class ItemModal extends React.Component {
               <Col >
                 <ButtonToolbar className="justify-content-center">
                   <ToggleButtonGroup vertical className="btn-block" type="radio" name="ratio" size="lg">
-                    <ToggleButton className="ItemModalButton mb-4" variant="info" value={-1} >All</ToggleButton>
-                    <ToggleButton className="ItemModalButton" variant="danger" value={1} >Much Less</ToggleButton>
-                    <ToggleButton className="ItemModalButton" variant="warning" value={2} >Less</ToggleButton>
-                    <ToggleButton className="ItemModalButton" variant="success" value={3} >Average</ToggleButton>
-                    <ToggleButton className="ItemModalButton" variant="warning" value={4} >More</ToggleButton>
-                    <ToggleButton className="ItemModalButton" variant="danger" value={5} >Much More</ToggleButton>
+                    {buttons}
                   </ToggleButtonGroup>
                 </ButtonToolbar>
               </Col>
@@ -49,7 +87,7 @@ class ItemModal extends React.Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="primary" onClick={this.props.onButtonClick}>Save changes</Button>
+          <Button variant="primary" onClick={() => this.props.onButtonClick(this.state.cost, this.state.amount)}>Save changes</Button>
         </Modal.Footer>
     </Modal></div>;
   }
