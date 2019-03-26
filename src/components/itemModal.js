@@ -15,7 +15,7 @@ class ItemModal extends React.Component {
     this.toggleButton = this.toggleButton.bind(this);
   }
   componentWillReceiveProps(nextProps, nextContext) {
-    if(nextProps.cost !== this.state.props || nextProps.amount !== this.state.props) {
+    if(nextProps.cost !== this.state.cost || nextProps.amount !== this.state.amount) {
       this.setState({
         cost: nextProps.cost,
         amount: nextProps.amount

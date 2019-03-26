@@ -30,7 +30,6 @@ class Splitting extends React.Component {
       selectedCost: null,
       selectedAmount: null,
     };
-    this.getSetModal = this.getSetModal.bind(this);
     this.onModalButton = this.onModalButton.bind(this);
     this.hideModal = this.hideModal.bind(this);
   }
@@ -57,18 +56,6 @@ class Splitting extends React.Component {
       items: items,
       showModal: false,
     });
-  }
-
-  getSetModal(item, index) {
-    return function () {
-      this.setState({
-        activeModal: index,
-        showModal: true,
-        modalImage: item.image,
-        selectedAmount: null, //TODO figure out how to get amount,
-        selectedCost: item.cost
-      })
-    }.bind(this)
   }
 
   render() {
