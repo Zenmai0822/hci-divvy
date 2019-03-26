@@ -10,8 +10,7 @@ class HostCrop extends Component {
   
     props.setHost();
 
-    this.instructionsText=["Input tax & total", "Tap the corners around the items section", "Separate line items"];
-  
+    this.instructionsText=["Tap the corners around the items section", "Separate line items"];
     this.state = {
       blob: null,
       curInstructionInd: 0
@@ -77,7 +76,6 @@ class HostCrop extends Component {
     let cropper = this.genCropper();
     return (
         <div className="host-setup">
-          <TotalAndTaxModal showModal={this.state.curInstructionInd === 0} onHide={this.moveBackward.bind(this)} onButtonClick={this.moveForward.bind(this)} />
           {/* TODO fix styles here */}
           <div className="d-flex justify-content-around align-items-center host-instructions">
             <Button variant="info" onClick={this.moveBackward.bind(this)}>back</Button>

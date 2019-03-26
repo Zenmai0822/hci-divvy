@@ -13,6 +13,7 @@ import Bill from './screens/bill';
 import Ending from './screens/ending';
 import Finish from './screens/finish';
 import DivvyNav from './components/navbar';
+import HostTaxTips from './screens/hostTaxTips'
 
 class AppRouter extends Component {
   constructor(props) {
@@ -70,6 +71,9 @@ class AppRouter extends Component {
           <DivvyNav roomCode={this.state.roomCode} />
           <div className="container-fluid screen">
             <Route path="/" exact component={Index} />
+            <Route path="/taxtips/" render={(props) => <HostTaxTips {...props} setHost={this.setHost.bind(this)}
+              viewHeight={this.state.height}
+              viewWidth={this.state.width} />}/>
             <Route path="/crop/" render={(props) => 
                                             <HostCrop {...props} 
                                                       setHost={this.setHost.bind(this)}

@@ -37,12 +37,6 @@ class TotalAndTaxModal extends React.Component {
 
   render() {
     return <div> 
-      <Modal show={this.props.showModal} onHide={this.props.onHide} >
-        <Modal.Header closeButton>
-          <Modal.Title>Bill Amount</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
           <Container>
             <Form>
               <Form.Group as={Row} controlId="billSubtotal">
@@ -59,7 +53,7 @@ class TotalAndTaxModal extends React.Component {
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="billTips">
-                <Form.Label column xs="6">Tips and Gratuities:</Form.Label>
+                <Form.Label column xs="6">Tips / Gratuities:</Form.Label>
                 <Col xs="6">
                   <Form.Control type="number"
                     min="0"
@@ -86,12 +80,7 @@ class TotalAndTaxModal extends React.Component {
               </Form.Group>
             </Form>
           </Container>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="primary" onClick={this.props.onButtonClick}>Save changes</Button>
-        </Modal.Footer>
-      </Modal></div>;
+      </div>;
   }
 }
 
