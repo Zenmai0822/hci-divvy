@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-const sideLen = 15;
 class CanvasItemLine extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +31,7 @@ class CanvasItemLine extends Component {
       this.state.ctx.drawImage(this.state.img, 0 , 0);
       // eslint-disable-next-line 
       this.state.ctx.fillStyle = 'white';
-    }
+    };
     // eslint-disable-next-line 
     this.state.img.src = this.props.image;
   }
@@ -41,7 +40,7 @@ class CanvasItemLine extends Component {
     let point = {
                   x: e.changedTouches[0].pageX - e.changedTouches[0].target.offsetLeft,
                   y: e.changedTouches[0].pageY - e.changedTouches[0].target.offsetTop
-                }
+                };
     this.setState({
       end: point
     })
@@ -51,13 +50,13 @@ class CanvasItemLine extends Component {
     let point = {
                   x: e.changedTouches[0].pageX - e.changedTouches[0].target.offsetLeft,
                   y: e.changedTouches[0].pageY - e.changedTouches[0].target.offsetTop
-                }
+                };
     this.setState({
       start: point
     })
   }
 
-  touchEnd(e) {
+  touchEnd() {
     this.props.touchEnd(this.state.start, this.state.end);
   }
 

@@ -22,7 +22,7 @@ class CanvasCropCorners extends Component {
     // eslint-disable-next-line 
     this.state.img.onload = () => {
 
-      let scaledHeight = (this.state.img.height * this.props.width)/this.state.img.width
+      const scaledHeight = (this.state.img.height * this.props.width)/this.state.img.width;
 
       // set canvas sizes equal to image size 
       canvas.width=this.props.width;
@@ -34,17 +34,19 @@ class CanvasCropCorners extends Component {
       canvas.toBlob((blob) => {
         this.props.imageCallback(blob);
       });
-    }
+    };
     // eslint-disable-next-line 
     this.state.img.src = this.props.image;
   }
 
   render() {
-    this.props.points.map((point) => {
+    this.props.points.forEach((point) => {
       let x = point.x;
       let y = point.y;
       //Outer cross X
+      // eslint-disable-next-line
       this.state.ctx.strokeStyle = 'white';
+      // eslint-disable-next-line
       this.state.ctx.lineWidth = outerLineWidth;
       this.state.ctx.beginPath();
       this.state.ctx.moveTo(x - outerSideLen, y);
@@ -58,7 +60,9 @@ class CanvasCropCorners extends Component {
       this.state.ctx.closePath();
       this.state.ctx.stroke();
       //Inner cross X
+      // eslint-disable-next-line
       this.state.ctx.strokeStyle = 'black';
+      // eslint-disable-next-line
       this.state.ctx.lineWidth = innerLineWidth;
       this.state.ctx.beginPath();
       this.state.ctx.moveTo(x - innerSideLen, y);
