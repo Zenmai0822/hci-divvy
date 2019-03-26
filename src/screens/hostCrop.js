@@ -10,7 +10,7 @@ class HostCrop extends Component {
   
     props.setHost();
 
-    this.instructionsText=["Input tax & total", "Tap the corners around the items section of the receipt", "Separate line items"];
+    this.instructionsText=["Input tax & total", "Tap the corners around the items section", "Separate line items"];
   
     this.state = {
       blob: null,
