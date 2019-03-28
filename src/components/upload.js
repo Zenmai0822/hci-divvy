@@ -21,7 +21,7 @@ class Upload extends Component {
   render() {
   if(this.state.files.length > 0 )  {
     return <Redirect to={{
-                      pathname: '/taxtips/',
+                      pathname: '/hostsetup/',
                       state: {
                         file: this.state.files[0]
                       }

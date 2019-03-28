@@ -4,7 +4,7 @@ import { Modal, ButtonGroup, ButtonToolbar, ToggleButtonGroup, ToggleButton } fr
 import Button from 'react-bootstrap/Button';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 
-class TotalAndTaxModal extends React.Component {
+class TotalAndTaxInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -84,5 +84,5 @@ class TotalAndTaxModal extends React.Component {
   }
 }
 
-export default TotalAndTaxModal;
+export default TotalAndTaxInput;
 

@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import CanvasImgCropper from '../components/canvasImgCropper';
 import ItemCropper from '../components/itemCropper';
-import TotalAndTaxModal from '../components/totalAndTaxModal';
+import TotalAndTaxInput from '../components/totalAndTaxInput'
   
-class HostCrop extends Component {
+class HostSetup extends Component {
    constructor(props) {
     super(props);
   
     props.setHost();
 
-    this.instructionsText=["Tap the corners around the items section", "Separate line items"];
+    this.instructionsText=["Input Tax, Tip, and Subtotal", "Tap the corners around the items section", "Separate line items"];
     this.state = {
       blob: null,
       curInstructionInd: 0
@@ -74,6 +74,10 @@ class HostCrop extends Component {
   render() {
     let text = this.instructionsText[this.state.curInstructionInd];
     let cropper = this.genCropper();
+    let taxtipinput;
+    if (this.state.curInstructionInd === 0) { 
+      taxtipinput = <TotalAndTaxInput/>
+    }
     return (
         <div className="host-setup">
           {/* TODO fix styles here */}
@@ -82,7 +86,8 @@ class HostCrop extends Component {
             <span className="host-instructions-text">{text}</span>
             <Button variant="info" onClick={this.moveForward.bind(this)}>next</Button>
           </div>
-          <hr />
+        <hr />
+        {taxtipinput}
           <div className="host-cropping">
             {cropper}  
           </div>
@@ -90,4 +95,4 @@ class HostCrop extends Component {
       );
   }
 }
-export default HostCrop;
+export default HostSetup;
