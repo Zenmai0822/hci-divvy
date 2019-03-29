@@ -51,23 +51,31 @@ class HostSetup extends Component {
   }
   
   genCropper() {
-    if(this.state.blob == null) {
-      return <div> 
+    if (this.state.curInstructionInd !== 0) { 
+      if(this.state.blob == null) {
+        return <div> 
         <CanvasImgCropper 
           viewWidth={this.props.viewWidth -30} 
           viewHeight={this.props.viewHeight} 
           file={this.props.location.state.file}
           imageCallback={this.imageCallback}
-        />
+          />
         
       </div>;
     } else {
       return <ItemCropper
-          viewWidth={this.props.viewWidth -30} 
-          viewHeight={this.props.viewHeight} 
-          file={this.state.blob}
-          imageCallback={this.imageCallback}
+      viewWidth={this.props.viewWidth -30} 
+      viewHeight={this.props.viewHeight} 
+      file={this.state.blob}
+      imageCallback={this.imageCallback}
       />
+    }
+  }
+  }
+
+  genImgOnly() { 
+    if (this.state.curInstructionInd === 0) { 
+      return <div><img src={URL.createObjectURL(this.props.location.state.file)} width={this.props.viewWidth - 30}/>></div>
     }
   }
 
@@ -78,6 +86,7 @@ class HostSetup extends Component {
     if (this.state.curInstructionInd === 0) { 
       taxtipinput = <TotalAndTaxInput/>
     }
+    let imgOnly = this.genImgOnly();
     return (
         <div className="host-setup">
           {/* TODO fix styles here */}
@@ -88,7 +97,8 @@ class HostSetup extends Component {
           </div>
         <hr />
         {taxtipinput}
-          <div className="host-cropping">
+        <div className="host-cropping">
+            {imgOnly}
             {cropper}  
           </div>
         </div>
