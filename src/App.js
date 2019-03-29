@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 
 import Index from './screens/index';
 
-import HostCrop from './screens/hostCrop';
+import HostSetup from './screens/hostSetup';
 import Room from './screens/room';
 import Splitting from './screens/splitting';
 import Waiting from './screens/waiting';
@@ -70,8 +70,8 @@ class AppRouter extends Component {
           <DivvyNav roomCode={this.state.roomCode} />
           <div className="container-fluid screen">
             <Route path="/" exact component={Index} />
-            <Route path="/crop/" render={(props) => 
-                                            <HostCrop {...props} 
+            <Route path="/hostsetup/" render={(props) => 
+                                            <HostSetup {...props} 
                                                       setHost={this.setHost.bind(this)}
                                                       viewHeight={this.state.height}
                                                       viewWidth={this.state.width}/>}/>

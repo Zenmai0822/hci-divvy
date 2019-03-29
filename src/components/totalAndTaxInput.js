@@ -4,15 +4,17 @@ import { Modal, ButtonGroup, ButtonToolbar, ToggleButtonGroup, ToggleButton } fr
 import Button from 'react-bootstrap/Button';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 
-class TotalAndTaxModal extends React.Component {
+class TotalAndTaxInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       billSubtotal: 0,
-      billTaxTips: 0,
+      billTips: 0,
+      billTaxes: 0
     }
     this.updateSubtotal = this.updateSubtotal.bind(this);
-    this.updateTips= this.updateTips.bind(this);
+    this.updateTips = this.updateTips.bind(this);
+    this.updateTaxes = this.updateTaxes.bind(this);
   }
 
   updateSubtotal(event) {
@@ -23,18 +25,18 @@ class TotalAndTaxModal extends React.Component {
 
   updateTips(event) {
     this.setState({
-      billTaxTips: event.target.value,
+      billTips: event.target.value,
+    })
+  }
+
+  updateTaxes(event) {
+    this.setState({
+      billTaxes: event.target.value,
     })
   }
 
   render() {
     return <div> 
-      <Modal show={this.props.showModal} onHide={this.props.onHide} >
-        <Modal.Header closeButton>
-          <Modal.Title>Bill Amount</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
           <Container>
             <Form>
               <Form.Group as={Row} controlId="billSubtotal">
@@ -50,8 +52,8 @@ class TotalAndTaxModal extends React.Component {
                     ></Form.Control>
                 </Col>
               </Form.Group>
-              <Form.Group as={Row} controlId="billTipsTaxes">
-                <Form.Label column xs="6">Taxes and Gratuities:</Form.Label>
+              <Form.Group as={Row} controlId="billTips">
+                <Form.Label column xs="6">Tips / Gratuities:</Form.Label>
                 <Col xs="6">
                   <Form.Control type="number"
                     min="0"
@@ -63,16 +65,24 @@ class TotalAndTaxModal extends React.Component {
                   ></Form.Control>
                 </Col>
               </Form.Group>
+              <Form.Group as={Row} controlId="billTaxes">
+                <Form.Label column xs="6">Taxes:</Form.Label>
+                <Col xs="6">
+                  <Form.Control type="number"
+                    min="0"
+                    step="0.01"
+                    data-number-to-fixed="2"
+                    data-number-stepfactor="100"
+                    placeholder="$"
+                    onChange={this.updateTaxes}
+                  ></Form.Control>
+                </Col>
+              </Form.Group>
             </Form>
           </Container>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="primary" onClick={this.props.onButtonClick}>Save changes</Button>
-        </Modal.Footer>
-      </Modal></div>;
+      </div>;
   }
 }
 
-export default TotalAndTaxModal;
+export default TotalAndTaxInput;
 

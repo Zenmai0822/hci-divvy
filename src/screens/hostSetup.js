@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import CanvasImgCropper from '../components/canvasImgCropper';
 import ItemCropper from '../components/itemCropper';
-import TotalAndTaxModal from '../components/totalAndTaxModal';
+import TotalAndTaxInput from '../components/totalAndTaxInput'
   
-class HostCrop extends Component {
+class HostSetup extends Component {
    constructor(props) {
     super(props);
   
     props.setHost();
 
-    this.instructionsText=["Input tax & total", "Tap the corners around the items section", "Separate line items"];
-  
+    this.instructionsText=["Input Tax, Tip, and Subtotal", "Tap the corners around the items section", "Separate line items"];
     this.state = {
       blob: null,
       curInstructionInd: 0
@@ -52,44 +51,58 @@ class HostCrop extends Component {
   }
   
   genCropper() {
-    if(this.state.blob == null) {
-      return <div> 
+    if (this.state.curInstructionInd !== 0) { 
+      if(this.state.blob == null) {
+        return <div> 
         <CanvasImgCropper 
           viewWidth={this.props.viewWidth -30} 
           viewHeight={this.props.viewHeight} 
           file={this.props.location.state.file}
           imageCallback={this.imageCallback}
-        />
+          />
         
       </div>;
     } else {
       return <ItemCropper
-          viewWidth={this.props.viewWidth -30} 
-          viewHeight={this.props.viewHeight} 
-          file={this.state.blob}
-          imageCallback={this.imageCallback}
+      viewWidth={this.props.viewWidth -30} 
+      viewHeight={this.props.viewHeight} 
+      file={this.state.blob}
+      imageCallback={this.imageCallback}
       />
+    }
+  }
+  }
+
+  genImgOnly() { 
+    if (this.state.curInstructionInd === 0) { 
+      return <div><img src={URL.createObjectURL(this.props.location.state.file)} width={this.props.viewWidth - 30}/>></div>
     }
   }
 
   render() {
     let text = this.instructionsText[this.state.curInstructionInd];
     let cropper = this.genCropper();
+    let taxtipinput;
+    if (this.state.curInstructionInd === 0) { 
+      taxtipinput = <TotalAndTaxInput/>
+    }
+    let imgOnly = this.genImgOnly();
     return (
         <div className="host-setup">
-          <TotalAndTaxModal showModal={this.state.curInstructionInd === 0} onHide={this.moveBackward.bind(this)} onButtonClick={this.moveForward.bind(this)} />
           {/* TODO fix styles here */}
           <div className="d-flex justify-content-around align-items-center host-instructions">
             <Button variant="info" onClick={this.moveBackward.bind(this)}>back</Button>
             <span className="host-instructions-text">{text}</span>
             <Button variant="info" onClick={this.moveForward.bind(this)}>next</Button>
           </div>
-          <hr />
-          <div className="host-cropping">
+        <hr />
+        {taxtipinput}
+        <div className="host-cropping">
+            {imgOnly}
             {cropper}  
           </div>
         </div>
       );
   }
 }
-export default HostCrop;
+export default HostSetup;
