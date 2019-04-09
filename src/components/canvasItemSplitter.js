@@ -82,8 +82,8 @@ class CanvasItemSplitter extends Component {
       //Add padding to allow for users to not be exact with their selections
       const padding = 5;
 
-      //These perspetive crops are hidden and we are only really using them to crop
-      // and then use their callbacks so we can have the resulting cropped images in a
+      //These perspective crops are hidden and we are only really using them to crop
+      //and then use their callbacks so we can have the resulting cropped images in a
       //easier to use format
       return <div className="d-none">
                 <PerspectiveCrop
