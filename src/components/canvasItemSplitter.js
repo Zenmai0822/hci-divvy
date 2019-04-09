@@ -25,20 +25,22 @@ class CanvasItemSplitter extends Component {
       start: null,
       end: null,
       itemImg: null,
-      restImg: null
+      restImg: null,
+      baseStr: null,
     });
   }
 }
   //Between item and rest image callback we will call item callback
   //once both have been called. They get the image back from 
   //Perspective crop and give it to the callback. 
-  itemImageCallback(img) {
+  itemImageCallback(img, baseStr) {
     if (this.state.restImg == null) {
       this.setState({
-        itemImg: img
+        itemImg: img,
+        baseStr: baseStr
       });
     } else {
-      this.props.itemCallback(img, this.state.restImg)
+      this.props.itemCallback(img, baseStr, this.state.restImg)
     }
   }
 
@@ -48,7 +50,7 @@ class CanvasItemSplitter extends Component {
         restImg: img
       });
     } else {
-      this.props.itemCallback(this.state.itemImg, img)
+      this.props.itemCallback(this.state.itemImg, this.state.baseStr, img)
     }
   }
 
@@ -71,8 +73,8 @@ class CanvasItemSplitter extends Component {
     }
     else{
       let orignalHeight = Math.max(this.state.end.y, this.state.start.y);
-      var leftPoint = this.state.start
-      var rightPoint = this.state.end
+      let leftPoint = this.state.start;
+      let rightPoint = this.state.end;
       if(leftPoint.x > rightPoint.x) {
         leftPoint = this.state.end;
         rightPoint = this.state.start;

@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import { Text } from 'react';
-import { Modal, ButtonGroup, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 
-class TotalAndTaxInput extends React.Component {
+class TotalAndTaxInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
       billSubtotal: 0,
       billTips: 0,
       billTaxes: 0
-    }
+    };
     this.updateSubtotal = this.updateSubtotal.bind(this);
     this.updateTips = this.updateTips.bind(this);
     this.updateTaxes = this.updateTaxes.bind(this);
@@ -49,7 +46,7 @@ class TotalAndTaxInput extends React.Component {
                     data-number-stepfactor="100"
                     placeholder="$"
                     onChange={this.updateSubtotal}
-                    ></Form.Control>
+                    />
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="billTips">
@@ -62,7 +59,7 @@ class TotalAndTaxInput extends React.Component {
                     data-number-stepfactor="100"
                     placeholder="$"
                     onChange={this.updateTips}
-                  ></Form.Control>
+                  />
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="billTaxes">
@@ -75,7 +72,7 @@ class TotalAndTaxInput extends React.Component {
                     data-number-stepfactor="100"
                     placeholder="$"
                     onChange={this.updateTaxes}
-                  ></Form.Control>
+                  />
                 </Col>
               </Form.Group>
             </Form>

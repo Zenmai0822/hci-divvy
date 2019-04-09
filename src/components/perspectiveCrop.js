@@ -42,7 +42,7 @@ class PerspectiveCrop extends Component {
       );
       hiddenCanvas.toBlob((blob) => {
 
-        this.props.imageCallback(blob);
+        this.props.imageCallback(blob, hiddenCanvas.toDataURL());
       });
 
 

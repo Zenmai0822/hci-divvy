@@ -75,7 +75,7 @@ class HostSetup extends Component {
 
   genImgOnly() { 
     if (this.state.curInstructionInd === 0) { 
-      return <div><img src={URL.createObjectURL(this.props.location.state.file)} width={this.props.viewWidth - 30}/>></div>
+      return <div><img alt='Full Receipt' src={URL.createObjectURL(this.props.location.state.file)} width={this.props.viewWidth - 30}/>></div>
     }
   }
 

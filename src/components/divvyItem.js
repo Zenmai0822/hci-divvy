@@ -1,7 +1,7 @@
 import React from 'react'
 import {Card} from 'react-bootstrap';
 
-export default props => {
+export default function DivvyItem(props) {
   const {
     onItemClick,
     item,
@@ -13,9 +13,9 @@ export default props => {
       }}>
     </div>
     :
-    item.splits.map(function(portion) {
+    item.splits.map(function(portion, i) {
       return(
-        <div style={{
+        <div key={i} style={{
           backgroundColor: portion.color,
           flex: portion.size,
           height: '2rem',

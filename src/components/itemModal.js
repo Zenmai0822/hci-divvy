@@ -36,6 +36,7 @@ class ItemModal extends React.Component {
       className={classes}
       variant={type}
       value={value}
+      key={value}
       onChange={this.onAmountPressed}>{text}</ToggleButton>
   }
   render() {
@@ -56,7 +57,7 @@ class ItemModal extends React.Component {
           <Container>
             <Form>
               <Form.Group as={Row}>
-                <div><img alt='receipt item image' src={this.props.receiptImage}/></div>
+                <div><img alt='receipt item' src={this.props.receiptImage}/></div>
                 <Form.Label column xs="6">This item costs:</Form.Label>
                 <Col xs="6">
                   <Form.Control type="number"
