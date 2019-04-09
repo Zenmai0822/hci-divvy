@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import CanvasImgCropper from '../components/canvasImgCropper';
 import ItemCropper from '../components/itemCropper';
 import TotalAndTaxInput from '../components/totalAndTaxInput'
-  
+
 class HostSetup extends Component {
    constructor(props) {
     super(props);
@@ -39,6 +39,11 @@ class HostSetup extends Component {
   } 
   moveForward() {
     if (this.state.curInstructionInd === this.instructionsText.length - 1) {
+      // TODO create room
+      let roomCode = "FPLL";
+
+      this.props.addUserToRoom(roomCode);
+
       this.props.history.push("/room");
     }
     
@@ -49,7 +54,7 @@ class HostSetup extends Component {
     
     this.setState({ curInstructionInd: this.state.curInstructionInd + 1 });
   }
-  
+
   genCropper() {
     if (this.state.curInstructionInd !== 0) { 
       if(this.state.blob == null) {
