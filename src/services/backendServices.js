@@ -14,7 +14,8 @@ export default class BackendService {
     async getRoomInfo(roomCode) { 
         return fetch(BackendService.urlPrefix = `/rooms`, {
             method: "get",
-            body: JSON.stringify({"roomCode": roomCode})
+            body: JSON.stringify({ "roomCode": roomCode }),
+            headers: {"content-type": "application/json"}
         })
         .then(response => response.json())
     }
