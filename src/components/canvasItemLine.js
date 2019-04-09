@@ -16,26 +16,42 @@ class CanvasItemLine extends Component {
   
   componentDidMount() {
     const canvas = this.refs.canvas;
+    const ctx =  canvas.getContext("2d");
     this.setState({
-      ctx: canvas.getContext("2d")
+      ctx: ctx
     });
 
-    // set canvas sizes equal to image size 
-    canvas.width=this.props.width;
-    canvas.height=this.props.height;
+     // set canvas sizes equal to image size
+     canvas.width=this.props.width;
+     canvas.height=this.props.height;
 
-     // eslint-disable-next-line 
+     // eslint-disable-next-line
     this.state.img.onload = () => {
       // draw the example image on the source canvas
-      // eslint-disable-next-line 
-      this.state.ctx.drawImage(this.state.img, 0 , 0);
-      // eslint-disable-next-line 
-      this.state.ctx.fillStyle = 'white';
+      // eslint-disable-next-line
+      ctx.drawImage(this.state.img, 0 , 0);
     };
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
     this.state.img.src = this.props.image;
   }
+  componentDidUpdate(prevProps) {
+    //Redraw canvas
+    if (this.props.image !== prevProps.image) {
+      const image = new Image();
+      image.src = this.props.image;
+      image.onload = function() {
+        // draw the example image on the source canvas
+        // eslint-disable-next-line
+        this.state.ctx.clearRect(0, 0, this.props.width, this.props.height);
+        this.state.ctx.drawImage(image, 0 , 0);
+        console.log('image loaded');
+        //debugger;
+        this.setState({img: image});
+      }.bind(this);
+      // eslint-disable-next-line
 
+    }
+  }
   touchMove(e){
     let point = {
                   x: e.changedTouches[0].pageX - e.changedTouches[0].target.offsetLeft,

@@ -12,6 +12,12 @@ class TotalAndTaxInput extends Component {
     this.updateSubtotal = this.updateSubtotal.bind(this);
     this.updateTips = this.updateTips.bind(this);
     this.updateTaxes = this.updateTaxes.bind(this);
+    this.moveForward = this.moveForward.bind(this);
+    this.moveBackward = this.moveBackward.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.setTriggers({forward: this.moveForward, back: this.moveBackward});
   }
 
   updateSubtotal(event) {
@@ -31,6 +37,15 @@ class TotalAndTaxInput extends Component {
       billTaxes: event.target.value,
     })
   }
+
+  moveForward() {
+    this.props.moveForward();
+  }
+
+  moveBackward() {
+    this.props.moveBackward();
+  }
+
 
   render() {
     return <div> 
