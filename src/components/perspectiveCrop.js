@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Crop from './Crop';
 //NOTE: Do not give a image to this component that needs to be scaled.
 //Instead scale it convert it to a blob and then use that blob here. 
 //Things break and im too lazy to fix them with scaling.
@@ -7,15 +7,16 @@ class PerspectiveCrop extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      img: new Image()
+      img: new Image(),
+      canvas: null
     };
 
   }
   
   componentDidMount() {
-    const canvas = this.refs.canvas
-    const ctx = canvas.getContext("2d")
-    // eslint-disable-next-line 
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext("2d");
+    // eslint-disable-next-line
     this.state.img.onload = () => {
       
       canvas.width=this.props.width;
@@ -25,10 +26,12 @@ class PerspectiveCrop extends Component {
 
       // unwarp the source rectangle and draw it to the destination canvas
       this.unwarp(this.props.anchors,this.props.unwarped,ctx);
-      canvas.toBlob((blob) => {
-        this.props.imageCallback(blob);
-      })
-    }
+      //In order to make it so that we get back a image that doesn't have any transparancy around it
+      //we need to crop it. To signal this we set the canvas state
+      this.setState({canvas: canvas});
+
+
+    };
     // eslint-disable-next-line
     this.state.img.src = this.props.image;
   }
@@ -36,10 +39,22 @@ class PerspectiveCrop extends Component {
   render() {
     return(
       <div>
-        <canvas ref="canvas" 
-      width={this.props.width} 
-      height={this.props.height} 
-      onClick={this.props.handleClick}/>
+        <canvas ref="canvas"
+          width={this.props.width}
+          height={this.props.height}
+          onClick={this.props.handleClick}/>
+
+        {this.state.canvas !== null ?
+          <Crop displayNone={true}
+                canvas={this.state.canvas}
+                width={this.props.width}
+                height={this.props.height}
+                cropWidth={this.props.width - 1}
+                cropHeight={this.props.height - 1}
+                x={0}
+                y={1}
+                imageCallback={this.props.imageCallback}
+          /> :<> </>}
       </div>
     )
   }
@@ -57,6 +72,8 @@ class PerspectiveCrop extends Component {
                );
 
     // eliminate slight space between triangles
+    // NOTE: this adds a small space on the top/right of the image.
+    // we will move the image back and crop it later.
     context.translate(-1,1);
 
     // unwarp the top-right triangle of the warped polygon
@@ -64,7 +81,8 @@ class PerspectiveCrop extends Component {
                 anchors.TL,  anchors.TR,  anchors.BR,
                 unwarped.TL, unwarped.TR, unwarped.BR
                );
-
+    // Move the image back so that it is in the correct place and there is no transparency around it.
+    context.translate(1,-1);
   }
 
 
