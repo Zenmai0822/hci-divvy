@@ -34,7 +34,7 @@ class ItemCropper extends Component {
     }
   }
   itemCallback(itemBlob, baseStr, newRestImageBlob) {
-    const joined = [... this.state.images].concat({
+    const joined = [...this.state.images].concat({
       item: { src: URL.createObjectURL(itemBlob),
               str: baseStr },
       full: this.state.restImage,

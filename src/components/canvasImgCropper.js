@@ -26,7 +26,7 @@ class CanvasImgCropper extends Component {
     if(this.state.points.length === 0) {
       this.props.moveBackward();
     } else {
-      const points = [... this.state.points];
+      const points = [...this.state.points];
       points.splice(points.length -1, 1);
       this.setState({
         points: points
@@ -40,7 +40,7 @@ class CanvasImgCropper extends Component {
                 x: e.pageX - e.target.offsetLeft,
                 y: e.pageY - e.target.offsetTop,
               };
-  const points = [... this.state.points];
+  const points = [...this.state.points];
   points.push(point);
   this.setState({points: points});
   console.log('The CANVAS was clicked at.');
