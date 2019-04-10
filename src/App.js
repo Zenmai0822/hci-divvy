@@ -23,8 +23,11 @@ class AppRouter extends Component {
       height: 0, 
       isHost: false,
       roomCode: null,  /* need this for displaying the roomCode in the nav */
-      userId: -1
+      user: null
     };
+    this.addUserToRoom = this.addUserToRoom.bind(this);
+    this.setHost = this.setHost.bind(this);
+    this.setRoomCode = this.setRoomCode.bind(this);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
@@ -72,8 +75,9 @@ class AppRouter extends Component {
     };
 
     let doneCallback = (resp) => {
-      console.log("set userid " + resp.user_id);
-      this.setState({ userId: resp.user_id });
+      console.log("set user ")
+      console.log(resp);
+      this.setState({ user: resp });
       successCallback(resp);
     }
     $.ajax(settings).done(doneCallback).fail(errorCallback);
@@ -94,15 +98,15 @@ class AppRouter extends Component {
           </Helmet>
           <DivvyNav roomCode={this.state.roomCode} />
           <div className="container-fluid screen">
-            <Route path="/" exact render={(props) => <Index {...props} setRoomCode={this.setRoomCode.bind(this)} addUserToRoom={this.addUserToRoom.bind(this)} /> } />
+            <Route path="/" exact render={(props) => <Index {...props} setRoomCode={this.setRoomCode} addUserToRoom={this.addUserToRoom} /> } />
             <Route path="/hostsetup/" render={(props) => 
                                             <HostSetup {...props} 
-                                                      setHost={this.setHost.bind(this)}
+                                                      setHost={this.setHost}
                                                       viewHeight={this.state.height}
                                                       viewWidth={this.state.width}
-                                                      setRoomCode={this.setRoomCode.bind(this)}
-                                                      addUserToRoom={this.addUserToRoom.bind(this)} /> } />
-            <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} roomCode={this.state.roomCode} userId={this.state.userId} setRoomCode={this.setRoomCode.bind(this)} /> } /> {/* might need to move setRoomCode later */}
+                                                      setRoomCode={this.setRoomCode}
+                                                      addUserToRoom={this.addUserToRoom} /> } />
+            <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} roomCode={this.state.roomCode} userId={this.state.userId} setRoomCode={this.setRoomCode} /> } /> {/* might need to move setRoomCode later */}
             <Route path="/splitting/" component={Splitting} />
             <Route path="/waiting/" render={(props) => <Waiting {...props} isHost={this.state.isHost} /> } />
             <Route path="/ending/" component={Ending} />
