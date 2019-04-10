@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Crop from './Crop';
 //NOTE: Do not give a image to this component that needs to be scaled.
 //Instead scale it convert it to a blob and then use that blob here. 
 //Things break and im too lazy to fix them with scaling.
@@ -7,15 +7,14 @@ class PerspectiveCrop extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      img: new Image()
+      img: new Image(),
+      canvas: null
     };
 
   }
   
   componentDidMount() {
     const canvas = this.refs.canvas;
-    const hiddenCanvas = this.refs.hiddenCanvas;
-    const hiddenCtx = hiddenCanvas.getContext('2d');
     const ctx = canvas.getContext("2d");
     // eslint-disable-next-line
     this.state.img.onload = () => {
@@ -28,22 +27,8 @@ class PerspectiveCrop extends Component {
       // unwarp the source rectangle and draw it to the destination canvas
       this.unwarp(this.props.anchors,this.props.unwarped,ctx);
       //In order to make it so that we get back a image that doesn't have any transparancy around it
-      //we need to crop it with this hidden canvas.
-      hiddenCtx.drawImage(
-        canvas,
-        0,
-        1,
-        this.props.width -1,
-        this.props.height -1,
-        0,
-        0,
-        this.props.width,
-        this.props.height
-      );
-      hiddenCanvas.toBlob((blob) => {
-
-        this.props.imageCallback(blob);
-      });
+      //we need to crop it. To signal this we set the canvas state
+      this.setState({canvas: canvas});
 
 
     };
@@ -55,14 +40,21 @@ class PerspectiveCrop extends Component {
     return(
       <div>
         <canvas ref="canvas"
-      width={this.props.width}
-      height={this.props.height}
-      onClick={this.props.handleClick}/>
-        <canvas ref='hiddenCanvas'
-                className='d-none'
+          width={this.props.width}
+          height={this.props.height}
+          onClick={this.props.handleClick}/>
+
+        {this.state.canvas !== null ?
+          <Crop displayNone={true}
+                canvas={this.state.canvas}
                 width={this.props.width}
                 height={this.props.height}
-        />
+                cropWidth={this.props.width - 1}
+                cropHeight={this.props.height - 1}
+                x={0}
+                y={1}
+                imageCallback={this.props.imageCallback}
+          /> :<> </>}
       </div>
     )
   }
