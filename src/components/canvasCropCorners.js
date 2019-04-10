@@ -38,8 +38,14 @@ class CanvasCropCorners extends Component {
     // eslint-disable-next-line 
     this.state.img.src = this.props.image;
   }
-
-  render() {
+  componentDidUpdate(prevProps) {
+    //Redraw canvas
+    if(this.props.points.length < prevProps.points.length) {
+      const scaledHeight = (this.state.img.height * this.props.width) / this.state.img.width;
+      this.state.ctx.clearRect(0, 0, this.props.width, scaledHeight);
+      this.state.ctx.drawImage(this.state.img, 0, 0, this.props.width, scaledHeight);
+    }
+    //Redraw Points
     this.props.points.forEach((point) => {
       let x = point.x;
       let y = point.y;
@@ -75,7 +81,11 @@ class CanvasCropCorners extends Component {
       this.state.ctx.lineTo(x, y + innerSideLen);
       this.state.ctx.closePath();
       this.state.ctx.stroke();
-      });
+    });
+  }
+
+  render() {
+
     return(
       <div>
         <canvas ref="canvas" 

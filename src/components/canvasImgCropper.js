@@ -11,15 +11,36 @@ class CanvasImgCropper extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.cropCallback = this.cropCallback.bind(this);
-
+    this.moveBackward = this.moveBackward.bind(this);
+    this.moveForward = this.moveForward.bind(this);
   }
+  componentDidMount() {
+    this.props.setTriggers({forward: this.moveForward, back: this.moveBackward});
+  }
+
+  moveForward() {
+    this.props.moveForward(this.props.file, this.props.viewHeight, this.props.viewWidth);
+  }
+
+  moveBackward() {
+    if(this.state.points.length === 0) {
+      this.props.moveBackward();
+    } else {
+      const points = [...this.state.points];
+      points.splice(points.length -1, 1);
+      this.setState({
+        points: points
+      });
+    }
+  }
+
   handleClick(e) {
   e.preventDefault();
   const point = {
                 x: e.pageX - e.target.offsetLeft,
                 y: e.pageY - e.target.offsetTop,
               };
-  const points = this.state.points;
+  const points = [...this.state.points];
   points.push(point);
   this.setState({points: points});
   console.log('The CANVAS was clicked at.');
@@ -94,7 +115,7 @@ class CanvasImgCropper extends Component {
       const topRight = this.minPoints(this.maxPoints(this.state.points, true, true), false, false)[0];
       const botRight = this.maxPoints(this.maxPoints(this.state.points, true, true), false, false)[0];
       const botLeft = this.maxPoints(this.minPoints(this.state.points, true, true), false, false)[0];
-       const originalHeight = Math.min(botRight.y - topRight.y,
+      const originalHeight = Math.min(botRight.y - topRight.y,
                                botLeft.y - topLeft.y);
       const originalWidth = Math.min(topRight.x - topLeft.x,
                                botRight.x - botLeft.x);
@@ -104,7 +125,7 @@ class CanvasImgCropper extends Component {
               image={this.state.blob}
               width={this.props.viewWidth}
               height={scaledHeight}
-              imageCallback={this.props.imageCallback}
+              imageCallback={(blob) => this.props.imageCallback(blob, scaledHeight, this.props.viewWidth)}
               anchors={{
                 TL:topLeft,
                 TR:topRight,
