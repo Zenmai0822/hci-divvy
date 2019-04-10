@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CanvasItemLine from './canvasItemLine'
 import PerspectiveCrop from './perspectiveCrop'
+import Crop from "./Crop";
 class CanvasItemSplitter extends Component {
   constructor(props) {
     super(props);
@@ -72,7 +73,7 @@ class CanvasItemSplitter extends Component {
              />;
     }
     else{
-      let orignalHeight = Math.max(this.state.end.y, this.state.start.y);
+      let originalHeight = Math.max(this.state.end.y, this.state.start.y);
       let leftPoint = this.state.start;
       let rightPoint = this.state.end;
       if(leftPoint.x > rightPoint.x) {
@@ -81,47 +82,70 @@ class CanvasItemSplitter extends Component {
       }
       //Add padding to allow for users to not be exact with their selections
       const padding = 5;
+      const maxNormalCrop = 5;
 
+      const crop = Math.abs(leftPoint.y - rightPoint.y) > maxNormalCrop ?
+        <><PerspectiveCrop
+          image={this.props.image}
+          width={this.props.viewWidth}
+          height={originalHeight}
+          imageCallback={this.itemImageCallback}
+          anchors={{
+            TL:{x:0,y:0},
+            TR:{x:this.props.viewWidth,y:0},
+            BR:{x:this.props.viewWidth,y:rightPoint.y + padding},
+            BL:{x:0,y:leftPoint.y + padding}
+          }}
+          unwarped={{
+            TL:{x:0,y:0},
+            TR:{x:this.props.viewWidth,y:0},
+            BR:{x:this.props.viewWidth,y:originalHeight + padding},
+            BL:{x:0,y:originalHeight + padding},
+          }}
+        />
+        <PerspectiveCrop
+        image={this.props.image}
+        width={this.props.viewWidth}
+        height={this.props.viewHeight - originalHeight}
+        imageCallback={this.restImageCallback}
+        anchors={{
+          TL:{x:0,y:leftPoint.y - padding},
+          TR:{x:this.props.viewWidth,y:rightPoint.y - padding},
+          BR:{x:this.props.viewWidth,y:this.props.viewHeight},
+          BL:{x:0,y: this.props.viewHeight}
+        }}
+        unwarped={{
+          TL:{x:0,y:0},
+          TR:{x:this.props.viewWidth,y:0},
+          BR:{x:this.props.viewWidth,y:this.props.viewHeight + padding - originalHeight},
+          BL:{x:0,y:this.props.viewHeight + padding - originalHeight},
+        }}
+        /></> :
+        <>
+          <Crop displayNone={false}
+                image={this.props.image}
+                width={this.props.viewWidth}
+                height={Math.max(rightPoint.y, leftPoint.y)}
+                cropWidth={this.props.viewWidth}
+                cropHeight={Math.max(rightPoint.y, leftPoint.y)}
+                x={0}
+                y={0}
+                imageCallback={this.itemImageCallback}/>
+          <Crop displayNone={false}
+                image={this.props.image}
+                width={this.props.viewWidth}
+                height={this.props.viewHeight - Math.min(rightPoint.y, leftPoint.y)}
+                cropWidth={this.props.viewWidth}
+                cropHeight={this.props.viewHeight - Math.min(rightPoint.y, leftPoint.y)}
+                x={0}
+                y={Math.min(rightPoint.y, leftPoint.y)}
+                imageCallback={this.restImageCallback}
+        /></>;
       //These perspective crops are hidden and we are only really using them to crop
       //and then use their callbacks so we can have the resulting cropped images in a
       //easier to use format
       return <div className="d-none">
-                <PerspectiveCrop
-                  image={this.props.image}
-                  width={this.props.viewWidth}
-                  height={orignalHeight}
-                  imageCallback={this.itemImageCallback}
-                  anchors={{
-                    TL:{x:0,y:0},     
-                    TR:{x:this.props.viewWidth,y:0},
-                    BR:{x:this.props.viewWidth,y:rightPoint.y + padding},
-                    BL:{x:0,y:leftPoint.y + padding}
-                  }}
-                  unwarped={{
-                    TL:{x:0,y:0},
-                    TR:{x:this.props.viewWidth,y:0},
-                    BR:{x:this.props.viewWidth,y:orignalHeight + padding},
-                    BL:{x:0,y:orignalHeight + padding},
-                  }}
-                />
-                <PerspectiveCrop
-                  image={this.props.image}
-                  width={this.props.viewWidth}
-                  height={this.props.viewHeight - orignalHeight}
-                  imageCallback={this.restImageCallback}
-                  anchors={{
-                    TL:{x:0,y:leftPoint.y - padding},
-                    TR:{x:this.props.viewWidth,y:rightPoint.y - padding},
-                    BR:{x:this.props.viewWidth,y:this.props.viewHeight},     
-                    BL:{x:0,y: this.props.viewHeight}
-                  }}
-                  unwarped={{
-                    TL:{x:0,y:0},
-                    TR:{x:this.props.viewWidth,y:0},
-                    BR:{x:this.props.viewWidth,y:this.props.viewHeight + padding - orignalHeight},
-                    BL:{x:0,y:this.props.viewHeight + padding - orignalHeight},
-                  }}
-                />
+        {crop}
               </div>;
     }
   }
