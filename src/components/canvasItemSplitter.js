@@ -82,7 +82,7 @@ class CanvasItemSplitter extends Component {
       }
       //Add padding to allow for users to not be exact with their selections
       const padding = 5;
-      const maxNormalCrop = 5;
+      const maxNormalCrop = 15;
 
       const crop = Math.abs(leftPoint.y - rightPoint.y) > maxNormalCrop ?
         <><PerspectiveCrop
@@ -117,26 +117,26 @@ class CanvasItemSplitter extends Component {
         unwarped={{
           TL:{x:0,y:0},
           TR:{x:this.props.viewWidth,y:0},
-          BR:{x:this.props.viewWidth,y:this.props.viewHeight + padding - originalHeight},
-          BL:{x:0,y:this.props.viewHeight + padding - originalHeight},
+          BR:{x:this.props.viewWidth,y:this.props.viewHeight - padding - originalHeight},
+          BL:{x:0,y:this.props.viewHeight - padding - originalHeight},
         }}
         /></> :
         <>
           <Crop displayNone={false}
                 image={this.props.image}
                 width={this.props.viewWidth}
-                height={Math.max(rightPoint.y, leftPoint.y)}
+                height={Math.max(rightPoint.y, leftPoint.y) + padding}
                 cropWidth={this.props.viewWidth}
-                cropHeight={Math.max(rightPoint.y, leftPoint.y)}
+                cropHeight={Math.max(rightPoint.y, leftPoint.y) + padding}
                 x={0}
                 y={0}
                 imageCallback={this.itemImageCallback}/>
           <Crop displayNone={false}
                 image={this.props.image}
                 width={this.props.viewWidth}
-                height={this.props.viewHeight - Math.min(rightPoint.y, leftPoint.y)}
+                height={this.props.viewHeight - padding - Math.min(rightPoint.y, leftPoint.y)}
                 cropWidth={this.props.viewWidth}
-                cropHeight={this.props.viewHeight - Math.min(rightPoint.y, leftPoint.y)}
+                cropHeight={this.props.viewHeight - padding - Math.min(rightPoint.y, leftPoint.y)}
                 x={0}
                 y={Math.min(rightPoint.y, leftPoint.y)}
                 imageCallback={this.restImageCallback}
