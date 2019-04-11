@@ -1,6 +1,6 @@
 export default class BackendService { 
 
-    static urlPrefix = "http://http://www.doublewb.xyz/hci"
+    static urlPrefix = "http://www.doublewb.xyz/hci"
     static instance = null;
 
     static getInstance() { 
@@ -81,7 +81,7 @@ export default class BackendService {
     async removeParticipation(item) { 
         return fetch(BackendService.urlPrefix + "/amounts", {
             method: "delete", 
-            body: JSON.stringify(item);
+            body: JSON.stringify(item),
             header: {"content-type": "application/json"}
         }).then(response => { 
             response.clone().json();
