@@ -81,7 +81,7 @@ export default class BackendService {
     async removeParticipation(item) { 
         return fetch(BackendService.urlPrefix + "/amounts", {
             method: "delete", 
-            npdu: JSON.stringify(item);
+            body: JSON.stringify(item);
             header: {"content-type": "application/json"}
         }).then(response => { 
             response.clone().json();
