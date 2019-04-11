@@ -21,6 +21,7 @@ class AppRouter extends Component {
     this.state = { 
       width: 0, 
       height: 0, 
+      initialRoomFetch: false,
       isHost: false,
       roomCode: null, /* need this for displaying the roomCode in the nav */
       room: null,
@@ -30,6 +31,7 @@ class AppRouter extends Component {
     this.setHost = this.setHost.bind(this);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.updateItems = this.updateItems.bind(this);
+    this.updateItemsWithImages = this.updateItemsWithImages.bind(this);
     this.setRoomCode = this.setRoomCode.bind(this);
   }
 
@@ -37,7 +39,10 @@ class AppRouter extends Component {
   //Probably not the most elegant way of doing it, but it seems to work. And on mobile the screen should
   // not be changing enough to slow things down (I hope).
   componentDidMount() {
-    this.timer = setInterval(()=> this.updateItems(), 5000);
+    this.timer = setInterval(()=> {
+        if (this.state.initialRoomFetch) 
+          { this.updateItems() }
+      }, 1000);
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
   }
@@ -52,10 +57,40 @@ class AppRouter extends Component {
   }
 
   updateItems() {
-    if(this.state.roomCode !== null) {
-      fetch('https://doublewb.xyz/hci/rooms/'+ this.state.roomCode)
+    if(this.state.roomCode !== null && this.state.initialRoomFetch) {
+      if (this.state.room.items === null) {
+        this.updateItemsWithImages(this.state.roomCode);
+      } else {
+        fetch('https://doublewb.xyz/hci/rooms/' + this.state.roomCode)
+          .then(result => {
+            return result.json()
+          })
+          .then(function (result) {
+            // assumes room has already been updated at least once
+            let oldItems = this.state.room.items;
+            let newItems = result.items;
+            if (oldItems.length !== newItems.length) {
+              this.updateItemsWithImages(this.state.roomCode);
+            } else {
+              for (let i = 0; i < oldItems.length; i++) {
+                newItems[i].image = oldItems[i].image;
+              }
+
+              let newRoom = Object.assign({}, result, {items: newItems});
+              this.setState({room: newRoom})
+            }
+
+          }.bind(this));
+      }
+    }
+  }
+
+  updateItemsWithImages(roomCode = null) {
+    let code = this.state.roomCode || roomCode;
+    if(code !== null) {
+      fetch('https://doublewb.xyz/hci/rooms/'+ code + '?images=true')
         .then(result => {return result.json()})
-        .then(function(result) {this.setState({ room: result })}.bind(this));
+        .then(function(result) {this.setState({ room: result, initialRoomFetch: true })}.bind(this));
     }
   }
 
@@ -110,13 +145,17 @@ class AppRouter extends Component {
           </Helmet>
           <DivvyNav roomCode={this.state.roomCode} />
           <div className="container-fluid screen">
-            <Route path="/" exact render={(props) => <Index {...props} setRoomCode={this.setRoomCode} addUserToRoom={this.addUserToRoom} /> } />
+            <Route path="/" exact render={(props) => <Index {...props} 
+                  setRoomCode={this.setRoomCode} 
+                  addUserToRoom={this.addUserToRoom} 
+                  initialFetch={this.updateItemsWithImages} /> } />
             <Route path="/hostsetup/" render={(props) => 
                                             <HostSetup {...props} 
                                                       setHost={this.setHost}
                                                       viewHeight={this.state.height}
                                                       viewWidth={this.state.width}
                                                       setRoomCode={this.setRoomCode}
+                                                      initialFetch={this.updateItemsWithImages}
                                                       addUserToRoom={this.addUserToRoom} /> } />
             <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost}
                                                           user={this.state.user}

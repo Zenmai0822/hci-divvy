@@ -18,7 +18,6 @@ class ItemCropper extends Component {
 
   moveForward() {
     Promise.all(this.state.images.map((image) => {
-      console.log(image);
       fetch('https://doublewb.xyz/hci/items',
         { method: 'POST',
           headers: { "Content-Type" : "application/json" },
