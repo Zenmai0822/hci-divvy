@@ -163,7 +163,7 @@ class AppRouter extends Component {
             <Route path="/splitting/" component={Splitting} />
             <Route path="/waiting/" render={(props) => <Waiting {...props} isHost={this.state.isHost} /> } />
             <Route path="/ending/" component={Ending} />
-            <Route path="/bill/" component={Bill} />
+            <Route path="/bill/" render={(props) => <Bill {...props} user={this.state.user} room={this.state.room} />} />
             <Route path="/finish/" component={Finish} />
           </div>
         </div>
