@@ -16,7 +16,10 @@ class HostSetup extends Component {
       blob: null,
       curInstructionInd: 0,
       height: props.viewHeight,
-      width: props.viewWidth
+      width: props.viewWidth,
+      tax: 0,
+      tip: 0,
+      total: 0
     };
     this.imageCallback = this.imageCallback.bind(this);
     this.moveChildForward = this.moveChildForward.bind(this);
@@ -24,6 +27,7 @@ class HostSetup extends Component {
     this.genCropper = this.genCropper.bind(this);
     this.moveForward = this.moveForward.bind(this);
     this.moveBackward = this.moveBackward.bind(this);
+    this.setTaxTipTotal = this.setTaxTipTotal.bind(this);
   }
   imageCallback(blob, height, width) {
     this.setState({
@@ -56,12 +60,29 @@ class HostSetup extends Component {
   } 
   moveForward(image, height, width) {
     if (this.state.curInstructionInd === this.instructionsText.length - 1) {
-      // TODO create room
-      let roomCode = "FPLL";
+      
+      let data = {
+        tax: this.state.tax, 
+        tip: this.state.tip, 
+        total: this.state.total
+      };
+      // TODO replace with service call
+      fetch("http://doublewb.xyz/hci/rooms", {
+        method: "POST", 
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => res.json())
+        .then((resp) => { 
+          console.log(resp);
+          this.props.setRoomCode(resp.code);
+          
+          this.props.addUserToRoom(resp.code);
 
-      this.props.addUserToRoom(roomCode);
+          this.props.history.push("/room");
+      }, (err) => { console.log(err) });
 
-      this.props.history.push("/room");
     }
     
     if (this.state.curInstructionInd > 0 && this.state.blob == null) {
@@ -75,6 +96,10 @@ class HostSetup extends Component {
     }
     
     this.setState({ curInstructionInd: this.state.curInstructionInd + 1 });
+  }
+
+  setTaxTipTotal(tax, tip, total) {
+    this.setState({ tax: tax, tip: tip, total: total});
   }
 
   genCropper() {
@@ -121,6 +146,7 @@ class HostSetup extends Component {
         moveForward={this.moveForward}
         moveBackward={this.moveBackward}
         setTriggers={(triggers) => this.childTriggers[0] = triggers}
+        setTaxTipTotal={this.setTaxTipTotal}
       />
     }
     let imgOnly = this.genImgOnly();

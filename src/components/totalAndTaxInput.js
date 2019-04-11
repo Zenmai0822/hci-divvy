@@ -39,6 +39,7 @@ class TotalAndTaxInput extends Component {
   }
 
   moveForward() {
+    this.props.setTaxTipTotal(this.state.billTaxes, this.state.billTips, this.state.billSubtotal);
     this.props.moveForward();
   }
 
