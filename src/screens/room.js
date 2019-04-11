@@ -8,7 +8,6 @@ class Room extends React.Component {
   constructor(props) {
     super(props);
     
-    props.setRoomCode('2XE3'); 
     this.state = { showHostPrompt: props.isHost };
   }
 
