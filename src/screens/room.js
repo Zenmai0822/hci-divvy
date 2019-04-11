@@ -15,6 +15,11 @@ class Room extends React.Component {
   }
 
   render() {
+    if (this.props.user == null) {
+      return <div>loading...</div>;
+    }
+
+
     return (
         <div>
           <Modal show={this.state.showHostPrompt} onHide={this.handleClose.bind(this)} centered>

@@ -61,6 +61,7 @@ class HostSetup extends Component {
   } 
   moveForward(data) {
     if (this.state.curInstructionInd === this.instructionsText.length - 1) {
+      this.props.initialFetch();
       this.props.history.push("/room");
     }
 

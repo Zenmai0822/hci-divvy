@@ -29,7 +29,9 @@ class Index extends Component {
               <br />
               <Link to='/room' onClick={() => {
                 this.props.setRoomCode(this.state.roomCode);
-                this.props.addUserToRoom(this.state.roomCode)}}>
+                this.props.addUserToRoom(this.state.roomCode);
+                this.props.initialFetch(this.state.roomCode);
+                }}>
                 <Button className="btn-join" variant="primary" size="lg" block>Join existing room</Button>
               </Link>
             </form>
