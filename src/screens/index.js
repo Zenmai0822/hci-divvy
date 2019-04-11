@@ -14,7 +14,7 @@ class Index extends Component {
   }
 
   onInputChange(ev) {
-    this.setState({roomCode: ev.target.value});
+    this.setState({roomCode: ev.target.value.toUpperCase()});
   }
 
   // TODO maybe check for room exists?

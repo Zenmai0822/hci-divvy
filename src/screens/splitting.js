@@ -23,22 +23,16 @@ class Splitting extends React.Component {
     });
   }
   onModalButton(cost, amount) {
-    // 1. Make a shallow copy of the items
-    let items = [...this.props.room.items];
-    // 2. Make a shallow copy of the item you want to mutate
-    let item = {...items[this.state.activeModal]};
-    // 3. Replace the property you're interested in
-    let splits = item.amounts;
-    splits.push({color:'red', size:amount});
-    item.splits = splits;
-    item.cost = cost;
-    // // 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
-    // items[this.state.activeModal] = item;
-    // // 5. Set the state to our new copy
-    // this.setState({
-    //   items: items,
-    //   showModal: false,
-    // });
+    const item = this.props.room.items[this.state.activeModal];
+    fetch('http://doublewb.xyz/hci/amounts',
+      { method: 'POST',
+        headers: { "Content-Type" : "application/json" },
+        body: JSON.stringify({room_code: this.props.room.code,
+          user_id: this.props.user.user_id,
+          amount: amount,
+          item_id: item.id})
+      }).then(result => {return result.json()})
+        .then(function(result) {console.log("updated item");console.log(result); this.hideModal()}.bind(this));
   }
 
   render() {
@@ -49,8 +43,9 @@ class Splitting extends React.Component {
         <div className="row">
           <div className="container">
             {items.map(function(item, i) {
+              //const item.amount.index
               return (
-                <div key={i}> <DivvyItem item={item}
+                <div key={i}> <DivvyItem item={item} user={this.props.user}
                            onItemClick={() => this.setState({
                              activeModal: i,
                              showModal: true,
@@ -64,8 +59,8 @@ class Splitting extends React.Component {
           </div>
           <ItemModal receiptImage={this.state.modalImage}
                      showModal={this.state.showModal}
-                     amount={this.state.selectedAmount}
-                     cost={this.state.selectedCost}
+                     amount={null} //TODO
+                     cost={this.state.activeModal !== -1 ? items[this.state.activeModal] : 0}
                      onHide={this.hideModal}
                      onButtonClick={this.onModalButton} />
         </div>

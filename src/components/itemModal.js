@@ -14,17 +14,9 @@ class ItemModal extends React.Component {
     this.onAmountPressed = this.onAmountPressed.bind(this);
     this.toggleButton = this.toggleButton.bind(this);
   }
-  componentWillReceiveProps(nextProps, nextContext) {
-    if(nextProps.cost !== this.state.cost || nextProps.amount !== this.state.amount) {
-      this.setState({
-        cost: nextProps.cost,
-        amount: nextProps.amount
-      })
-    }
-  }
 
   onAmountPressed(e) {
-    this.setState({amount: e.target.value})
+    this.setState({amount: parseInt(e.target.value)})
   }
   toggleButton(type, value, text) {
 
@@ -67,7 +59,7 @@ class ItemModal extends React.Component {
                     data-number-stepfactor="100"
                     placeholder="$"
                     value={this.state.cost}
-                    onChange={(e) => this.setState({cost: e.target.value})}/>
+                    onChange={(e) => this.setState({cost: parseFloat(e.target.value)})}/>
                 </Col>
               </Form.Group>
             </Form>

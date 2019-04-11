@@ -37,7 +37,7 @@ class AppRouter extends Component {
   //Probably not the most elegant way of doing it, but it seems to work. And on mobile the screen should
   // not be changing enough to slow things down (I hope).
   componentDidMount() {
-    this.timer = setInterval(()=> this.updateItems(), 1000);
+    this.timer = setInterval(()=> this.updateItems(), 5000);
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
   }
@@ -120,7 +120,7 @@ class AppRouter extends Component {
                                                       addUserToRoom={this.addUserToRoom} /> } />
             <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost}
                                                           roomCode={this.state.roomCode}
-                                                          userId={this.state.userId}
+                                                          user={this.state.user}
                                                           room={this.state.room}/> } />
             <Route path="/splitting/" component={Splitting} />
             <Route path="/waiting/" render={(props) => <Waiting {...props} isHost={this.state.isHost} /> } />
