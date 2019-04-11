@@ -50,7 +50,7 @@ class ItemModal extends React.Component {
           <Container>
             <Form>
               <Form.Group as={Row}>
-                <div><img alt='receipt item' src={this.props.receiptImage}/></div>
+                <div className='w-100 pb-1'><img className='w-100' alt='receipt item' src={this.props.receiptImage}/></div>
                 <Form.Label column xs="6">This item costs:</Form.Label>
                 <Col xs="6">
                   <Form.Control type="number"
