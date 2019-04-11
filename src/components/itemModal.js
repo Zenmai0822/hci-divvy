@@ -33,7 +33,7 @@ class ItemModal extends React.Component {
       onChange={this.onAmountPressed}>{text}</ToggleButton>
   }
   render() {
-    const buttons = [{type: 'info', value: -1, text: "All"},
+    const buttons = [{type: 'info', value: 6, text: "All"},
       {type: 'danger', value: 1, text: "Much Less"},
       {type: 'warning', value: 2, text: "Less"},
       {type: 'success', value: 3, text: "Average"},
@@ -50,7 +50,7 @@ class ItemModal extends React.Component {
           <Container>
             <Form>
               <Form.Group as={Row}>
-                <div><img alt='receipt item' src={this.props.receiptImage}/></div>
+                <div className='w-100 pb-1'><img className='w-100' alt='receipt item' src={this.props.receiptImage}/></div>
                 <Form.Label column xs="6">This item costs:</Form.Label>
                 <Col xs="6">
                   <Form.Control type="number"
@@ -59,7 +59,7 @@ class ItemModal extends React.Component {
                     data-number-to-fixed="2"
                     data-number-stepfactor="100"
                     placeholder="$"
-                    value={this.state.cost}
+                    value={this.state.cost ? this.state.cost : ''}
                     onChange={(e) => this.setState({cost: e.target.value !== '' ? parseFloat(e.target.value) : ''})}/>
                 </Col>
               </Form.Group>

@@ -32,7 +32,7 @@ class Index extends Component {
                 this.props.addUserToRoom(this.state.roomCode);
                 this.props.initialFetch(this.state.roomCode);
                 }}>
-                <Button className="btn-join" variant="primary" size="lg" block>Join existing room</Button>
+                <Button className="btn-join" variant="primary" size="lg" block disabled={!this.state.roomCode}>Join existing room</Button>
               </Link>
             </form>
           </div>
