@@ -50,6 +50,7 @@ class HostSetup extends Component {
 
   moveBackward() {
     if (this.state.curInstructionInd === 0) {
+      this.props.setNotHost();
       this.props.history.push("/");
     }
   
