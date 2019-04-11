@@ -1,6 +1,6 @@
 export default class BackendService { 
 
-    static urlPrefix = "http://www.doublewb.xyz/hci"
+    static urlPrefix = "https://www.doublewb.xyz/hci"
     static instance = null;
 
     static getInstance() { 
