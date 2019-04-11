@@ -11,8 +11,8 @@ export default class BackendService {
         return this.instance;
     }
 
-    async getRoomInfo(roomCode) { 
-        return fetch(BackendService.urlPrefix + `/rooms/${roomCode}`)
+    async getRoomInfo(roomCode, ifImage) { 
+        return fetch(BackendService.urlPrefix + `/rooms/${roomCode}?images=${ifImage}`)
         .then(response => response.json())
     }
 
