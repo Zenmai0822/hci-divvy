@@ -22,19 +22,19 @@ class TotalAndTaxInput extends Component {
 
   updateSubtotal(event) {
     this.setState({
-      billSubtotal: event.target.value,
+      billSubtotal: parseFloat(event.target.value),
     })
   }
 
   updateTips(event) {
     this.setState({
-      billTips: event.target.value,
+      billTips: parseFloat(event.target.value),
     })
   }
 
   updateTaxes(event) {
     this.setState({
-      billTaxes: event.target.value,
+      billTaxes: parseFloat(event.target.value),
     })
   }
 
