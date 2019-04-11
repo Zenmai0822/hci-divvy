@@ -42,7 +42,7 @@ class AppRouter extends Component {
     this.timer = setInterval(()=> {
         if (this.state.initialRoomFetch) 
           { this.updateItems() }
-      }, 5000);
+      }, 1000);
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
   }
@@ -57,26 +57,36 @@ class AppRouter extends Component {
   }
 
   updateItems() {
-    if(this.state.roomCode !== null) {
-      fetch('https://doublewb.xyz/hci/rooms/' + this.state.roomCode)
-        .then(result => {return result.json()})
-        .then(function(result) {
+    if(this.state.roomCode !== null && this.state.initialRoomFetch) {
+      if (this.state.room.items === null) {
+        this.updateItemsWithImages(this.state.roomCode);
+      } else {
+        fetch('https://doublewb.xyz/hci/rooms/' + this.state.roomCode)
+          .then(result => {
+            return result.json()
+          })
+          .then(function (result) {
             // assumes room has already been updated at least once
             let oldItems = this.state.room.items;
             let newItems = result.items;
-            for (let i = 0; i < oldItems.length; i++) {
-              newItems[i].image = oldItems[i].image;
+            if (oldItems.length !== newItems.length) {
+              this.updateItemsWithImages(this.state.roomCode);
+            } else {
+              for (let i = 0; i < oldItems.length; i++) {
+                newItems[i].image = oldItems[i].image;
+              }
+
+              let newRoom = Object.assign({}, result, {items: newItems});
+              this.setState({room: newRoom})
             }
-  
-            let newRoom = Object.assign({}, result, {items: newItems})
-            this.setState({ room: newRoom })
-            
+
           }.bind(this));
+      }
     }
   }
 
   updateItemsWithImages(roomCode = null) {
-    let code = this.state.roomCode || roomCode
+    let code = this.state.roomCode || roomCode;
     if(code !== null) {
       fetch('https://doublewb.xyz/hci/rooms/'+ code + '?images=true')
         .then(result => {return result.json()})
