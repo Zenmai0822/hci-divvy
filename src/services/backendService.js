@@ -11,8 +11,8 @@ export default class BackendService {
         return this.instance;
     }
 
-    async getRoomInfo(roomCode) { 
-        return fetch(BackendService.urlPrefix + `/rooms/${roomCode}`)
+    async getRoomInfo(roomCode, ifImage) { 
+        return fetch(BackendService.urlPrefix + `/rooms/${roomCode}?images=${ifImage}`)
         .then(response => response.json())
     }
 
@@ -90,5 +90,15 @@ export default class BackendService {
 
     async getBill(user, roomcode) { 
         return fetch(BackendService.urlPrefix + `/bill/user/${user}/room/${roomcode}`).then(response => response.json())
+    }
+
+    async userFinished(user) { 
+        return fetch(BackendService.urlPrefix + "/finished", {
+            method: "post", 
+            body: JSON.stringify(user),
+            header: {"content-type": "application/json"}
+        }).then(response => { 
+            response.clone().json();
+        })
     }
 }
