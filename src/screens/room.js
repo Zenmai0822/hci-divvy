@@ -7,8 +7,6 @@ import Splitting from './splitting';
 class Room extends React.Component {
   constructor(props) {
     super(props);
-
-    props.setRoomCode('2XE3');
     this.state = { showHostPrompt: props.isHost };
   }
 
@@ -28,7 +26,7 @@ class Room extends React.Component {
               <Button variant="secondary" onClick={this.handleClose.bind(this)}>Close</Button>
             </Modal.Footer>
           </Modal>
-          <Splitting room={this.props.room}/>
+          <Splitting />
         </div>
       );
   }
