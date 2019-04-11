@@ -79,17 +79,18 @@ class Splitting extends React.Component {
                            })}
                 /></div>);
             }, this)}
-          </div>
-          <ItemModal receiptImage={this.state.modalImage}
-                     showModal={this.state.showModal}
-                     amount={curAmount !== null ? curAmount : 0}
-                     cost={this.state.activeModal !== -1 ? items[this.state.activeModal].price : 0}
-                     onHide={this.hideModal}
-                     onButtonClick={this.onModalButton} />
         </div>
-        <div className="row my-2 mx-0">
-          <Link to='/waiting'><Button variant="success">Finish</Button></Link>
-        </div>
+        {this.state.showModal ?
+        <ItemModal receiptImage={this.state.modalImage}
+                   showModal={this.state.showModal}
+                   amount={curAmount !== null ? curAmount : 0}
+                   cost={this.state.activeModal !== -1 ? items[this.state.activeModal].price : 0}
+                   onHide={this.hideModal}
+                   onButtonClick={this.onModalButton} /> : <></>}
+      </div>
+      <div className="row my-2 mx-0">
+        <Link to='/waiting'><Button variant="success">Finish</Button></Link>
+      </div>
       </div>);
   }
 }
