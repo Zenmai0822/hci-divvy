@@ -21,25 +21,38 @@ class AppRouter extends Component {
       width: 0, 
       height: 0, 
       isHost: false,
-      roomCode: null  /* need this for displaying the roomCode in the nav */
+      roomCode: null, /* need this for displaying the roomCode in the nav */
+      room: null
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.updateItems = this.updateItems.bind(this);
+    this.setRoomCode = this.setRoomCode.bind(this);
   }
 
   //This is all to pass around the size of the screen so we can use it for canvas and image sizing. 
   //Probably not the most elegant way of doing it, but it seems to work. And on mobile the screen should
   // not be changing enough to slow things down (I hope).
   componentDidMount() {
+    this.timer = setInterval(()=> this.updateItems(), 1000);
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
+    this.timer = null;
   }
 
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    this.setState({ width: window.innerWidth, height: window.innerHeight});
+  }
+
+  updateItems() {
+    if(this.state.roomCode !== null) {
+      fetch('http://doublewb.xyz/hci/rooms/'+ this.state.roomCode)
+        .then(result => {debugger; return result.json()})
+        .then(function(result) {debugger; this.setState({ room: result })}.bind(this));
+    }
   }
 
   setHost() {
@@ -71,11 +84,12 @@ class AppRouter extends Component {
           <div className="container-fluid screen">
             <Route path="/" exact component={Index} />
             <Route path="/hostsetup/" render={(props) => 
-                                            <HostSetup {...props} 
+                                            <HostSetup {...props}
                                                       setHost={this.setHost.bind(this)}
                                                       viewHeight={this.state.height}
-                                                      viewWidth={this.state.width}/>}/>
-            <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} setRoomCode={this.setRoomCode.bind(this)} /> } /> {/* might need to move setRoomCode later */}
+                                                      viewWidth={this.state.width}
+                                                      setRoomCode={this.setRoomCode}/>}/>
+            <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} room={this.state.room}/> } /> {/* might need to move setRoomCode later */}
             <Route path="/splitting/" component={Splitting} />
             <Route path="/waiting/" render={(props) => <Waiting {...props} isHost={this.state.isHost} /> } />
             <Route path="/ending/" component={Ending} />

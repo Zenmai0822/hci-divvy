@@ -89,6 +89,7 @@ class HostSetup extends Component {
       </div>;
     } else {
       return <ItemCropper
+        roomCode={'EYOH'}
         viewWidth={this.state.width}
         viewHeight={this.state.height}
         file={this.state.blob}
@@ -96,6 +97,7 @@ class HostSetup extends Component {
         moveForward={this.moveForward}
         moveBackward={this.moveBackward}
         setTriggers={(triggers) => this.childTriggers[2] = triggers}
+        setRoomCode={this.props.setRoomCode}
       />
     }
   }

@@ -10,7 +10,7 @@ class Room extends React.Component {
     
     this.roomCode = "2XE3";
 
-    props.setRoomCode(this.roomCode);
+    //props.setRoomCode(this.roomCode);
     this.state = { showHostPrompt: props.isHost };
   }
 
@@ -30,7 +30,7 @@ class Room extends React.Component {
               <Button variant="secondary" onClick={this.handleClose.bind(this)}>Close</Button>
             </Modal.Footer>
           </Modal>
-          <Splitting />
+          <Splitting room={this.props.room}/>
         </div>
       );
   }

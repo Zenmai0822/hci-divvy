@@ -6,7 +6,7 @@ export default function DivvyItem(props) {
     onItemClick,
     item,
   } = props;
-  const splitForItem = item.splits.length === 0 ?
+  const splitForItem = item.splits === undefined || item.splits.length === 0 ?
     <div style={{
         flex: 1,
         height: '2rem',
