@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
 import { Helmet } from 'react-helmet';
+import $ from 'jquery';
 
 import Index from './screens/index';
 
@@ -22,8 +23,11 @@ class AppRouter extends Component {
       height: 0, 
       isHost: false,
       roomCode: null, /* need this for displaying the roomCode in the nav */
-      room: null
+      room: null,
+      user: null
     };
+    this.addUserToRoom = this.addUserToRoom.bind(this);
+    this.setHost = this.setHost.bind(this);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.updateItems = this.updateItems.bind(this);
     this.setRoomCode = this.setRoomCode.bind(this);
@@ -44,7 +48,7 @@ class AppRouter extends Component {
   }
 
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight});
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 
   updateItems() {
@@ -68,6 +72,30 @@ class AppRouter extends Component {
     this.setState({ roomCode: roomCode }); 
   }
 
+  addUserToRoom(roomCode, successCallback = (resp) => {}, errorCallback = (resp) => {}) {
+    // TODO replace with service call
+    let settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "http://doublewb.xyz/hci/join_room",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "processData": false,
+      "data": "{\"room_code\":\"" + roomCode + "\"}"
+    };
+
+    let doneCallback = (resp) => {
+      console.log("set user ");
+      console.log(resp);
+      this.setState({ user: resp });
+      successCallback(resp);
+    };
+    $.ajax(settings).done(doneCallback).fail(errorCallback);
+  }
+
+
   render() {
     return (
       <Router>
@@ -82,14 +110,15 @@ class AppRouter extends Component {
           </Helmet>
           <DivvyNav roomCode={this.state.roomCode} />
           <div className="container-fluid screen">
-            <Route path="/" exact component={Index} />
+            <Route path="/" exact render={(props) => <Index {...props} setRoomCode={this.setRoomCode} addUserToRoom={this.addUserToRoom} /> } />
             <Route path="/hostsetup/" render={(props) => 
-                                            <HostSetup {...props}
-                                                      setHost={this.setHost.bind(this)}
+                                            <HostSetup {...props} 
+                                                      setHost={this.setHost}
                                                       viewHeight={this.state.height}
                                                       viewWidth={this.state.width}
-                                                      setRoomCode={this.setRoomCode}/>}/>
-            <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} room={this.state.room}/> } /> {/* might need to move setRoomCode later */}
+                                                      setRoomCode={this.setRoomCode}
+                                                      addUserToRoom={this.addUserToRoom} /> } />
+            <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} roomCode={this.state.roomCode} userId={this.state.userId} setRoomCode={this.setRoomCode} /> } /> {/* might need to move setRoomCode later */}
             <Route path="/splitting/" component={Splitting} />
             <Route path="/waiting/" render={(props) => <Waiting {...props} isHost={this.state.isHost} /> } />
             <Route path="/ending/" component={Ending} />
