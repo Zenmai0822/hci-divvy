@@ -119,7 +119,6 @@ class AppRouter extends Component {
                                                       setRoomCode={this.setRoomCode}
                                                       addUserToRoom={this.addUserToRoom} /> } />
             <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost}
-                                                          roomCode={this.state.roomCode}
                                                           user={this.state.user}
                                                           room={this.state.room}/> } />
             <Route path="/splitting/" component={Splitting} />
