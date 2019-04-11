@@ -17,6 +17,7 @@ class HostSetup extends Component {
       curInstructionInd: 0,
       height: props.viewHeight,
       width: props.viewWidth,
+      roomCode: null,
       tax: 0,
       tip: 0,
       total: 0
@@ -58,39 +59,35 @@ class HostSetup extends Component {
       curInstructionInd: this.state.curInstructionInd - 1 
     });
   } 
-  moveForward(image, height, width) {
+  moveForward(data) {
     if (this.state.curInstructionInd === this.instructionsText.length - 1) {
-      
-      let data = {
-        tax: this.state.tax, 
-        tip: this.state.tip, 
-        total: this.state.total
-      };
+      this.props.history.push("/room");
+    }
+
+    if (this.state.curInstructionInd === 0) {
       // TODO replace with service call
-      fetch("http://doublewb.xyz/hci/rooms", {
-        method: "POST", 
+      fetch("https://doublewb.xyz/hci/rooms", {
+        method: "POST",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json"
         }
       }).then(res => res.json())
-        .then((resp) => { 
+        .then((resp) => {
           console.log(resp);
-          this.props.setRoomCode(resp.code);
-          
-          this.props.addUserToRoom(resp.code);
-
-          this.props.history.push("/room");
-      }, (err) => { console.log(err) });
+          this.setState({roomCode: resp.code});
+          this.props.setRoomCode(this.state.roomCode);
+          this.props.addUserToRoom(this.state.roomCode);
+        }, (err) => { console.log(err) });
 
     }
     
     if (this.state.curInstructionInd > 0 && this.state.blob == null) {
       // TODO update with better blob?
       this.setState({
-        blob: image,
-        width: width,
-        height: height,
+        blob: data.image,
+        width: data.width,
+        height: data.height,
         curInstructionInd: this.state.curInstructionInd + 1  });
       return;
     }
@@ -119,6 +116,7 @@ class HostSetup extends Component {
       </div>;
     } else {
       return <ItemCropper
+        roomCode={this.state.roomCode}
         viewWidth={this.state.width}
         viewHeight={this.state.height}
         file={this.state.blob}
@@ -126,6 +124,7 @@ class HostSetup extends Component {
         moveForward={this.moveForward}
         moveBackward={this.moveBackward}
         setTriggers={(triggers) => this.childTriggers[2] = triggers}
+        setRoomCode={this.props.setRoomCode}
       />
     }
   }

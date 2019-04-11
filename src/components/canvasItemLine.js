@@ -44,8 +44,6 @@ class CanvasItemLine extends Component {
         // eslint-disable-next-line
         this.state.ctx.clearRect(0, 0, this.props.width, this.props.height);
         this.state.ctx.drawImage(image, 0 , 0);
-        console.log('image loaded');
-        //debugger;
         this.setState({img: image});
       }.bind(this);
       // eslint-disable-next-line
