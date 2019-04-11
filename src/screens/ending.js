@@ -1,52 +1,34 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
+import backendService from '../services/backendService';
 class Ending extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      num: 1,
-      denom: 1
-    };
-
-    this.sleep = this.sleep.bind(this);
-    this.pretendJoining = this.pretendJoining.bind(this);
+    this.finishClick = this.finishClick.bind(this);
   }
-
-  sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  pretendJoining = async() => {
-    this.setState({
-      denom: 2
-    });
-    await this.sleep(750);
-    this.setState({
-      num: 2
-    });
-    await this.sleep(750);
-    this.setState({
-      denom: 3
-    });
-    await this.sleep(750);
-    this.setState({
-      num: 3
-    });
-  };
 
   componentDidMount() {
-    this.pretendJoining()
+    this.service = backendService.getInstance();
   }
 
+  finishClick() {
+      this.service.userFinished({"room_code":this.props.room.code, "finished":true, "user_id":this.props.user.user_id})
+        .then(function(){this.props.history.push('/bill')}.bind(this));
+  }
   render() {
+    let doneUsers = 0;
+    const users = this.props.room.users;
+    const totalUsers = users.length;
+    for(let i = 0; i < users.length; i++){
+      if(users[i].finished) { doneUsers++;}
+    }
     return (
       <div>
         <h1>Room Members Finished:</h1>
           <div>
-            <h1>{this.state.num}/{this.state.denom}</h1>
+            <h1>{doneUsers + 1}/{totalUsers}</h1>
           </div>
-        <Link to='/bill'><Button disabled={this.state.num !== this.state.denom} variant="success">End Divvy!</Button></Link>
+        <Button disabled={doneUsers !== totalUsers - 1} variant="success" onClick={this.finishClick}>End Divvy!</Button>
       </div>
     );
   }

@@ -29,6 +29,7 @@ class AppRouter extends Component {
     };
     this.addUserToRoom = this.addUserToRoom.bind(this);
     this.setHost = this.setHost.bind(this);
+    this.setNonHost = this.setNonHost.bind(this);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.updateItems = this.updateItems.bind(this);
     this.updateItemsWithImages = this.updateItemsWithImages.bind(this);
@@ -152,6 +153,7 @@ class AppRouter extends Component {
             <Route path="/hostsetup/" render={(props) => 
                                             <HostSetup {...props} 
                                                       setHost={this.setHost}
+                                                      setNotHost={this.setNonHost}
                                                       viewHeight={this.state.height}
                                                       viewWidth={this.state.width}
                                                       setRoomCode={this.setRoomCode}
@@ -161,7 +163,9 @@ class AppRouter extends Component {
                                                           user={this.state.user}
                                                           room={this.state.room}/> } />
             <Route path="/splitting/" component={Splitting} />
-            <Route path="/waiting/" render={(props) => <Waiting {...props} isHost={this.state.isHost} /> } />
+            <Route path="/waiting/" render={(props) => <Waiting {...props} isHost={this.state.isHost}
+                                                                user={this.state.user}
+                                                                room={this.state.room}/> } />
             <Route path="/ending/" component={Ending} />
             <Route path="/bill/" component={Bill} />
             <Route path="/finish/" component={Finish} />
