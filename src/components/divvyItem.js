@@ -12,7 +12,6 @@ export default function DivvyItem(props) {
     item,
     user,
   } = props;
-  debugger;
   const splitForItem = item.amount === undefined || item.amount === null || item.amount.length === 0 ?
     <div style={{
         flex: 1,
@@ -30,7 +29,7 @@ export default function DivvyItem(props) {
         <div key={i} style={{
           backgroundColor: color,
           flex: portion.amount === -1 ? 1 : portion.amount,
-          alignSelf: portion.user_id === user.user_id ? 'flex-start' : 'auto',
+          order: portion.user_id === user.user_id ? '100' : 'auto',
           height: '2rem',
         }}>
         </div>

@@ -29,6 +29,7 @@ class ItemModal extends React.Component {
       variant={type}
       value={value}
       key={value}
+      active={this.props.amount === value}
       onChange={this.onAmountPressed}>{text}</ToggleButton>
   }
   render() {
@@ -59,7 +60,7 @@ class ItemModal extends React.Component {
                     data-number-stepfactor="100"
                     placeholder="$"
                     value={this.state.cost}
-                    onChange={(e) => this.setState({cost: parseFloat(e.target.value)})}/>
+                    onChange={(e) => this.setState({cost: e.target.value !== '' ? parseFloat(e.target.value) : ''})}/>
                 </Col>
               </Form.Group>
             </Form>
@@ -80,7 +81,7 @@ class ItemModal extends React.Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="primary" onClick={() => this.props.onButtonClick(this.state.cost, this.state.amount)}>Save changes</Button>
+          <Button variant="primary" onClick={() => this.props.onButtonClick(this.state.cost === '' ? 0 :   this.state.cost, this.state.amount)}>Save changes</Button>
         </Modal.Footer>
     </Modal></div>;
   }
