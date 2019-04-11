@@ -36,7 +36,7 @@ class Splitting extends React.Component {
     const item = this.props.room.items[this.state.activeModal];
     const itemAmount = getUserAmount(this.props.user.user_id, item);
     if(item.price !== cost) {
-      fetch('http://doublewb.xyz/hci/items',
+      fetch('https://doublewb.xyz/hci/items',
         { method: 'PUT',
           headers: { "Content-Type" : "application/json" },
           body: JSON.stringify({room_code: this.props.room.code,
@@ -45,7 +45,7 @@ class Splitting extends React.Component {
         }).then(result => {return result.json()})
         .then(function(result) {console.log("updated cost");console.log(result);}.bind(this));
     }
-    fetch('http://doublewb.xyz/hci/amounts',
+    fetch('https://doublewb.xyz/hci/amounts',
       { method: itemAmount === null ? 'POST' : 'PUT',
         headers: { "Content-Type" : "application/json" },
         body: JSON.stringify({room_code: this.props.room.code,

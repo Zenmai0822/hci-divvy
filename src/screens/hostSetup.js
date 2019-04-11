@@ -66,7 +66,7 @@ class HostSetup extends Component {
 
     if (this.state.curInstructionInd === 0) {
       // TODO replace with service call
-      fetch("http://doublewb.xyz/hci/rooms", {
+      fetch("https://doublewb.xyz/hci/rooms", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {

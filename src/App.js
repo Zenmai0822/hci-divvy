@@ -53,7 +53,7 @@ class AppRouter extends Component {
 
   updateItems() {
     if(this.state.roomCode !== null) {
-      fetch('http://doublewb.xyz/hci/rooms/'+ this.state.roomCode)
+      fetch('https://doublewb.xyz/hci/rooms/'+ this.state.roomCode)
         .then(result => {return result.json()})
         .then(function(result) {this.setState({ room: result })}.bind(this));
     }
@@ -77,7 +77,7 @@ class AppRouter extends Component {
     let settings = {
       "async": true,
       "crossDomain": true,
-      "url": "http://doublewb.xyz/hci/join_room",
+      "url": "https://doublewb.xyz/hci/join_room",
       "method": "POST",
       "headers": {
         "Content-Type": "application/json"
