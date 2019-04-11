@@ -17,6 +17,7 @@ class HostSetup extends Component {
       curInstructionInd: 0,
       height: props.viewHeight,
       width: props.viewWidth,
+      roomCode: null,
       tax: 0,
       tip: 0,
       total: 0
@@ -60,28 +61,33 @@ class HostSetup extends Component {
   } 
   moveForward(image, height, width) {
     if (this.state.curInstructionInd === this.instructionsText.length - 1) {
-      
+      this.props.setRoomCode(this.state.roomCode);
+
+      this.props.addUserToRoom(this.state.roomCode);
+      this.props.history.push("/room");
+
+    }
+
+    if (this.state.curInstructionInd === 0) {
+
       let data = {
-        tax: this.state.tax, 
-        tip: this.state.tip, 
+        tax: this.state.tax,
+        tip: this.state.tip,
         total: this.state.total
       };
       // TODO replace with service call
       fetch("http://doublewb.xyz/hci/rooms", {
-        method: "POST", 
+        method: "POST",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json"
         }
       }).then(res => res.json())
-        .then((resp) => { 
+        .then((resp) => {
           console.log(resp);
-          this.props.setRoomCode(resp.code);
-          
-          this.props.addUserToRoom(resp.code);
+          this.setState({roomCode: resp.code});
 
-          this.props.history.push("/room");
-      }, (err) => { console.log(err) });
+        }, (err) => { console.log(err) });
 
     }
     
@@ -119,7 +125,7 @@ class HostSetup extends Component {
       </div>;
     } else {
       return <ItemCropper
-        roomCode={'EYOH'}
+        roomCode={this.state.roomCode}
         viewWidth={this.state.width}
         viewHeight={this.state.height}
         file={this.state.blob}

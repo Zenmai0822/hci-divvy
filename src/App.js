@@ -118,7 +118,10 @@ class AppRouter extends Component {
                                                       viewWidth={this.state.width}
                                                       setRoomCode={this.setRoomCode}
                                                       addUserToRoom={this.addUserToRoom} /> } />
-            <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} roomCode={this.state.roomCode} userId={this.state.userId} /> } /> 
+            <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost}
+                                                          roomCode={this.state.roomCode}
+                                                          userId={this.state.userId}
+                                                          room={this.state.room}/> } />
             <Route path="/splitting/" component={Splitting} />
             <Route path="/waiting/" render={(props) => <Waiting {...props} isHost={this.state.isHost} /> } />
             <Route path="/ending/" component={Ending} />

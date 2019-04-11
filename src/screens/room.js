@@ -26,7 +26,7 @@ class Room extends React.Component {
               <Button variant="secondary" onClick={this.handleClose.bind(this)}>Close</Button>
             </Modal.Footer>
           </Modal>
-          <Splitting />
+          <Splitting room={this.props.room}/>
         </div>
       );
   }
