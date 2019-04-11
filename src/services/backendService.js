@@ -28,5 +28,13 @@ export default class BackendService {
         })
     }
 
-    
+    async joinRoom(room) { 
+        return fetch(BackendService.urlPrefix + "/join_room/", {
+            method: "post",
+            body: JSON.stringify(room),
+            headers: {"content-type": "application/json"}
+        }).then(response => { 
+            response.clone().json();
+        })
+    }
 }
