@@ -53,6 +53,7 @@ class AppRouter extends Component {
   }
 
   updateWindowDimensions() {
+    console.log("update dimensions");
     this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 

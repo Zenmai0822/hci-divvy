@@ -33,7 +33,7 @@ class ItemModal extends React.Component {
       onChange={this.onAmountPressed}>{text}</ToggleButton>
   }
   render() {
-    const buttons = [{type: 'info', value: -1, text: "All"},
+    const buttons = [{type: 'info', value: 6, text: "All"},
       {type: 'danger', value: 1, text: "Much Less"},
       {type: 'warning', value: 2, text: "Less"},
       {type: 'success', value: 3, text: "Average"},
@@ -59,7 +59,7 @@ class ItemModal extends React.Component {
                     data-number-to-fixed="2"
                     data-number-stepfactor="100"
                     placeholder="$"
-                    value={this.state.cost}
+                    value={this.state.cost ? this.state.cost : ''}
                     onChange={(e) => this.setState({cost: e.target.value !== '' ? parseFloat(e.target.value) : ''})}/>
                 </Col>
               </Form.Group>
