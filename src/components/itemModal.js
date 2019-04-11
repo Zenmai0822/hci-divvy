@@ -14,17 +14,9 @@ class ItemModal extends React.Component {
     this.onAmountPressed = this.onAmountPressed.bind(this);
     this.toggleButton = this.toggleButton.bind(this);
   }
-  componentWillReceiveProps(nextProps, nextContext) {
-    if(nextProps.cost !== this.state.cost || nextProps.amount !== this.state.amount) {
-      this.setState({
-        cost: nextProps.cost,
-        amount: nextProps.amount
-      })
-    }
-  }
 
   onAmountPressed(e) {
-    this.setState({amount: e.target.value})
+    this.setState({amount: parseInt(e.target.value)})
   }
   toggleButton(type, value, text) {
 
@@ -37,6 +29,7 @@ class ItemModal extends React.Component {
       variant={type}
       value={value}
       key={value}
+      active={this.props.amount === value}
       onChange={this.onAmountPressed}>{text}</ToggleButton>
   }
   render() {
@@ -67,7 +60,7 @@ class ItemModal extends React.Component {
                     data-number-stepfactor="100"
                     placeholder="$"
                     value={this.state.cost}
-                    onChange={(e) => this.setState({cost: e.target.value})}/>
+                    onChange={(e) => this.setState({cost: e.target.value !== '' ? parseFloat(e.target.value) : ''})}/>
                 </Col>
               </Form.Group>
             </Form>
@@ -88,7 +81,7 @@ class ItemModal extends React.Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="primary" onClick={() => this.props.onButtonClick(this.state.cost, this.state.amount)}>Save changes</Button>
+          <Button variant="primary" onClick={() => this.props.onButtonClick(this.state.cost === '' ? 0 :   this.state.cost, this.state.amount)}>Save changes</Button>
         </Modal.Footer>
     </Modal></div>;
   }

@@ -17,7 +17,15 @@ class ItemCropper extends Component {
   }
 
   moveForward() {
-    this.props.moveForward(this.state.images);
+    Promise.all(this.state.images.map((image) => {
+      fetch('http://doublewb.xyz/hci/items',
+        { method: 'POST',
+          headers: { "Content-Type" : "application/json" },
+          body: JSON.stringify({room_code: this.props.roomCode, image: image.item.str })
+        })})).then(function(){
+          this.props.setRoomCode(this.props.roomCode);
+          this.props.moveForward();
+        }.bind(this));
   }
 
   moveBackward() {

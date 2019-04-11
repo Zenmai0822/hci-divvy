@@ -14,7 +14,7 @@ class Index extends Component {
   }
 
   onInputChange(ev) {
-    this.setState({roomCode: ev.target.value});
+    this.setState({roomCode: ev.target.value.toUpperCase()});
   }
 
   // TODO maybe check for room exists?
@@ -27,7 +27,11 @@ class Index extends Component {
             <form>
               <input type="text" name="roomCode" className="input-roomcode" placeholder="Room code" onChange={this.onInputChange.bind(this)} />
               <br />
-              <Link to='/room' onClick={() => {this.props.addUserToRoom(this.state.roomCode)}}><Button className="btn-join" variant="primary" size="lg" block>Join existing room</Button></Link>
+              <Link to='/room' onClick={() => {
+                this.props.setRoomCode(this.state.roomCode);
+                this.props.addUserToRoom(this.state.roomCode)}}>
+                <Button className="btn-join" variant="primary" size="lg" block>Join existing room</Button>
+              </Link>
             </form>
           </div>
         </div>

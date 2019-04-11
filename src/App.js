@@ -22,29 +22,41 @@ class AppRouter extends Component {
       width: 0, 
       height: 0, 
       isHost: false,
-      roomCode: null,  /* need this for displaying the roomCode in the nav */
+      roomCode: null, /* need this for displaying the roomCode in the nav */
+      room: null,
       user: null
     };
     this.addUserToRoom = this.addUserToRoom.bind(this);
     this.setHost = this.setHost.bind(this);
-    this.setRoomCode = this.setRoomCode.bind(this);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.updateItems = this.updateItems.bind(this);
+    this.setRoomCode = this.setRoomCode.bind(this);
   }
 
   //This is all to pass around the size of the screen so we can use it for canvas and image sizing. 
   //Probably not the most elegant way of doing it, but it seems to work. And on mobile the screen should
   // not be changing enough to slow things down (I hope).
   componentDidMount() {
+    this.timer = setInterval(()=> this.updateItems(), 5000);
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
+    this.timer = null;
   }
 
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
+  }
+
+  updateItems() {
+    if(this.state.roomCode !== null) {
+      fetch('http://doublewb.xyz/hci/rooms/'+ this.state.roomCode)
+        .then(result => {return result.json()})
+        .then(function(result) {this.setState({ room: result })}.bind(this));
+    }
   }
 
   setHost() {
@@ -75,14 +87,14 @@ class AppRouter extends Component {
     };
 
     let doneCallback = (resp) => {
-      console.log("set user ")
+      console.log("set user ");
       console.log(resp);
       this.setState({ user: resp });
       successCallback(resp);
-    }
+    };
     $.ajax(settings).done(doneCallback).fail(errorCallback);
   }
-  
+
 
   render() {
     return (
@@ -106,7 +118,9 @@ class AppRouter extends Component {
                                                       viewWidth={this.state.width}
                                                       setRoomCode={this.setRoomCode}
                                                       addUserToRoom={this.addUserToRoom} /> } />
-            <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost} roomCode={this.state.roomCode} userId={this.state.userId} /> } /> 
+            <Route path="/room/" render={(props) => <Room {...props} isHost={this.state.isHost}
+                                                          user={this.state.user}
+                                                          room={this.state.room}/> } />
             <Route path="/splitting/" component={Splitting} />
             <Route path="/waiting/" render={(props) => <Waiting {...props} isHost={this.state.isHost} /> } />
             <Route path="/ending/" component={Ending} />
