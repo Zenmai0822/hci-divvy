@@ -44,11 +44,11 @@ class AppRouter extends Component {
           { this.updateItems() }
       }, 1000);
     this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions);
+    //window.addEventListener('resize', this.updateWindowDimensions);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions);
+    //window.removeEventListener('resize', this.updateWindowDimensions);
     this.timer = null;
   }
 
