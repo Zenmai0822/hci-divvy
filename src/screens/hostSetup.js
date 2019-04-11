@@ -3,27 +3,44 @@ import Button from 'react-bootstrap/Button';
 import CanvasImgCropper from '../components/canvasImgCropper';
 import ItemCropper from '../components/itemCropper';
 import TotalAndTaxInput from '../components/totalAndTaxInput'
-  
+
 class HostSetup extends Component {
    constructor(props) {
     super(props);
   
     props.setHost();
 
-    this.instructionsText=["Input Tax, Tip, and Subtotal", "Tap the corners around the items section", "Separate line items"];
+    this.instructionsText=["Input Tax, Tip, and Subtotal", "Tap the corners around the items section", "Starting at the top, tap and drag to separate items"];
+    this.childTriggers = Array(this.instructionsText.length);
     this.state = {
       blob: null,
-      curInstructionInd: 0
+      curInstructionInd: 0,
+      height: props.viewHeight,
+      width: props.viewWidth
     };
     this.imageCallback = this.imageCallback.bind(this);
+    this.moveChildForward = this.moveChildForward.bind(this);
+    this.moveChildBackward = this.moveChildBackward.bind(this);
+    this.genCropper = this.genCropper.bind(this);
+    this.moveForward = this.moveForward.bind(this);
+    this.moveBackward = this.moveBackward.bind(this);
   }
-  imageCallback(blob) {
+  imageCallback(blob, height, width) {
     this.setState({
-      blob: blob
+      blob: blob,
+      height: height,
+      width: width
     });
     
     // also move forward
     this.moveForward();
+  }
+  moveChildForward() {
+    this.childTriggers[this.state.curInstructionInd].forward();
+  }
+
+  moveChildBackward() {
+    this.childTriggers[this.state.curInstructionInd].back();
   }
 
   moveBackward() {
@@ -37,19 +54,29 @@ class HostSetup extends Component {
       curInstructionInd: this.state.curInstructionInd - 1 
     });
   } 
-  moveForward() {
+  moveForward(image, height, width) {
     if (this.state.curInstructionInd === this.instructionsText.length - 1) {
+      // TODO create room
+      let roomCode = "FPLL";
+
+      this.props.addUserToRoom(roomCode);
+
       this.props.history.push("/room");
     }
     
     if (this.state.curInstructionInd > 0 && this.state.blob == null) {
       // TODO update with better blob?
-      this.setState({ blob: this.props.location.state.file });
+      this.setState({
+        blob: image,
+        width: width,
+        height: height,
+        curInstructionInd: this.state.curInstructionInd + 1  });
+      return;
     }
     
     this.setState({ curInstructionInd: this.state.curInstructionInd + 1 });
   }
-  
+
   genCropper() {
     if (this.state.curInstructionInd !== 0) { 
       if(this.state.blob == null) {
@@ -59,15 +86,21 @@ class HostSetup extends Component {
           viewHeight={this.props.viewHeight} 
           file={this.props.location.state.file}
           imageCallback={this.imageCallback}
+          moveForward={this.moveForward}
+          moveBackward={this.moveBackward}
+          setTriggers={(triggers) => this.childTriggers[1] = triggers}
           />
         
       </div>;
     } else {
       return <ItemCropper
-      viewWidth={this.props.viewWidth -30} 
-      viewHeight={this.props.viewHeight} 
-      file={this.state.blob}
-      imageCallback={this.imageCallback}
+        viewWidth={this.state.width}
+        viewHeight={this.state.height}
+        file={this.state.blob}
+        imageCallback={this.imageCallback}
+        moveForward={this.moveForward}
+        moveBackward={this.moveBackward}
+        setTriggers={(triggers) => this.childTriggers[2] = triggers}
       />
     }
   }
@@ -75,7 +108,7 @@ class HostSetup extends Component {
 
   genImgOnly() { 
     if (this.state.curInstructionInd === 0) { 
-      return <div><img src={URL.createObjectURL(this.props.location.state.file)} width={this.props.viewWidth - 30}/>></div>
+      return <div><img alt='Full Receipt' src={URL.createObjectURL(this.props.location.state.file)} width={this.props.viewWidth - 30}/></div>
     }
   }
 
@@ -84,16 +117,19 @@ class HostSetup extends Component {
     let cropper = this.genCropper();
     let taxtipinput;
     if (this.state.curInstructionInd === 0) { 
-      taxtipinput = <TotalAndTaxInput/>
+      taxtipinput = <TotalAndTaxInput
+        moveForward={this.moveForward}
+        moveBackward={this.moveBackward}
+        setTriggers={(triggers) => this.childTriggers[0] = triggers}
+      />
     }
     let imgOnly = this.genImgOnly();
     return (
         <div className="host-setup">
-          {/* TODO fix styles here */}
           <div className="d-flex justify-content-around align-items-center host-instructions">
-            <Button variant="info" onClick={this.moveBackward.bind(this)}>back</Button>
+            <Button variant="info" onClick={this.moveChildBackward}>back</Button>
             <span className="host-instructions-text">{text}</span>
-            <Button variant="info" onClick={this.moveForward.bind(this)}>next</Button>
+            <Button variant="info" onClick={this.moveChildForward}>next</Button>
           </div>
         <hr />
         {taxtipinput}

@@ -66,7 +66,7 @@ class Splitting extends React.Component {
           <div className="container">
             {this.state.items.map(function(item, i) {
               return (
-                <DivvyItem item={item}
+                <div key={i}> <DivvyItem item={item}
                            onItemClick={() => this.setState({
                              activeModal: i,
                              showModal: true,
@@ -75,7 +75,7 @@ class Splitting extends React.Component {
                              selectedAmount: null, //TODO figure out how to get amount from splits
                              selectedCost: item.cost
                            })}
-                />);
+                /></div>);
             }, this)}
           </div>
           <ItemModal receiptImage={this.state.modalImage}

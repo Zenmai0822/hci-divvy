@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
-class Ending extends React.Component {
+class Ending extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,7 +33,7 @@ class Ending extends React.Component {
     this.setState({
       num: 3
     });
-  }
+  };
 
   componentDidMount() {
     this.pretendJoining()
@@ -46,7 +46,7 @@ class Ending extends React.Component {
           <div>
             <h1>{this.state.num}/{this.state.denom}</h1>
           </div>
-        <Link to='/bill'><Button disabled={this.state.num != this.state.denom} variant="success">End Divvy!</Button></Link>
+        <Link to='/bill'><Button disabled={this.state.num !== this.state.denom} variant="success">End Divvy!</Button></Link>
       </div>
     );
   }
