@@ -59,22 +59,12 @@ class HostSetup extends Component {
       curInstructionInd: this.state.curInstructionInd - 1 
     });
   } 
-  moveForward(image, height, width) {
+  moveForward(data) {
     if (this.state.curInstructionInd === this.instructionsText.length - 1) {
-      this.props.setRoomCode(this.state.roomCode);
-
-      this.props.addUserToRoom(this.state.roomCode);
       this.props.history.push("/room");
-
     }
 
     if (this.state.curInstructionInd === 0) {
-
-      let data = {
-        tax: this.state.tax,
-        tip: this.state.tip,
-        total: this.state.total
-      };
       // TODO replace with service call
       fetch("http://doublewb.xyz/hci/rooms", {
         method: "POST",
@@ -86,7 +76,8 @@ class HostSetup extends Component {
         .then((resp) => {
           console.log(resp);
           this.setState({roomCode: resp.code});
-
+          this.props.setRoomCode(this.state.roomCode);
+          this.props.addUserToRoom(this.state.roomCode);
         }, (err) => { console.log(err) });
 
     }
@@ -94,9 +85,9 @@ class HostSetup extends Component {
     if (this.state.curInstructionInd > 0 && this.state.blob == null) {
       // TODO update with better blob?
       this.setState({
-        blob: image,
-        width: width,
-        height: height,
+        blob: data.image,
+        width: data.width,
+        height: data.height,
         curInstructionInd: this.state.curInstructionInd + 1  });
       return;
     }

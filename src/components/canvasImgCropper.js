@@ -19,7 +19,7 @@ class CanvasImgCropper extends Component {
   }
 
   moveForward() {
-    this.props.moveForward(this.props.file, this.props.viewHeight, this.props.viewWidth);
+    this.props.moveForward({image: this.props.file, height: this.props.viewHeight, width: this.props.viewWidth});
   }
 
   moveBackward() {

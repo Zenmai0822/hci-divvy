@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 function getUserAmount(userId, item) {
   let userAmount = null;
   let itemAmount = item.amount !== null ? item.amount : [];
-  debugger;
   for(let i = 0; i < itemAmount.length; i++) {
     const portion = itemAmount[i];
     if(portion.user_id === userId) {
@@ -36,7 +35,6 @@ class Splitting extends React.Component {
   onModalButton(cost, amount) {
     const item = this.props.room.items[this.state.activeModal];
     const itemAmount = getUserAmount(this.props.user.user_id, item);
-    debugger;
     if(item.price !== cost) {
       fetch('http://doublewb.xyz/hci/items',
         { method: 'PUT',
@@ -59,7 +57,7 @@ class Splitting extends React.Component {
   }
 
   render() {
-    const items = this.props.room ? this.props.room.items : [];
+    const items = this.props.room === null ? [] : (this.props.room.items === null ? [] : this.props.room.items);
     const curAmount = this.state.activeModal !== -1 ?
       getUserAmount(this.props.user.user_id, items[this.state.activeModal]) :
       0;
