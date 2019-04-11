@@ -54,8 +54,8 @@ class AppRouter extends Component {
   updateItems() {
     if(this.state.roomCode !== null) {
       fetch('http://doublewb.xyz/hci/rooms/'+ this.state.roomCode)
-        .then(result => {debugger; return result.json()})
-        .then(function(result) {debugger; this.setState({ room: result })}.bind(this));
+        .then(result => {return result.json()})
+        .then(function(result) {this.setState({ room: result })}.bind(this));
     }
   }
 
