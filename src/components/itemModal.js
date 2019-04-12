@@ -48,7 +48,7 @@ class ItemModal extends React.Component {
 
         <Modal.Body>
           <Container>
-            <Form>
+            <Form onSubmit={(event) => { event.preventDefault(); event.stopPropagation();}}>
               <Form.Group as={Row}>
                 <div className='w-100 pb-1'><img className='w-100' alt='receipt item' src={this.props.receiptImage}/></div>
                 <Form.Label column xs="6">This item costs:</Form.Label>

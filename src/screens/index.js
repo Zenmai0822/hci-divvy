@@ -24,7 +24,7 @@ class Index extends Component {
           <h2>Welcome to Divvy!</h2>
           <Upload />
           <div className="divvy-join">
-            <form>
+            <form onSubmit={(event) => { event.preventDefault(); event.stopPropagation();}}>
               <input type="text" name="roomCode" className="input-roomcode" placeholder="Room code" onChange={this.onInputChange.bind(this)} />
               <br />
               <Link to='/room' onClick={() => {
