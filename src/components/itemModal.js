@@ -81,7 +81,7 @@ class ItemModal extends React.Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="primary" onClick={() => this.props.onButtonClick(this.state.cost === '' ? 0 :   this.state.cost, this.state.amount)}>Save changes</Button>
+          <Button variant="primary" onClick={() => this.props.onButtonClick(this.state.cost === '' ? 0 :   this.state.cost, this.state.amount)} disabled={!this.state.cost}>Save changes</Button>
         </Modal.Footer>
     </Modal></div>;
   }

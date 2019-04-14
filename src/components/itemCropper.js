@@ -14,6 +14,8 @@ class ItemCropper extends Component {
   }
   componentDidMount() {
     this.props.setTriggers({forward: this.moveForward, back: this.moveBackward});
+    // lockout for cropping at least one item
+    this.props.setCanMoveForward(false);
   }
 
   moveForward() {
@@ -39,6 +41,9 @@ class ItemCropper extends Component {
         images: images,
         restImage: oldRest
       });
+      if (images.length === 0) {
+        this.props.setCanMoveForward(false);
+      }
     }
   }
   itemCallback(itemBlob, baseStr, newRestImageBlob) {
@@ -51,6 +56,9 @@ class ItemCropper extends Component {
       images: joined,
       restImage: URL.createObjectURL(newRestImageBlob)
     });
+    if (joined.length === 1) {
+      this.props.setCanMoveForward(true);
+    }
 
   }
 
