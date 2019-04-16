@@ -26,12 +26,13 @@ export default function DivvyItem(props) {
           otherColor :
           colorArray[portion.user_id]);
       return(
-        <div key={i} style={{
+        <div key={i} className="divvy-item-split" style={{
           backgroundColor: color,
           flex: portion.amount === -1 ? 1 : portion.amount,
           order: portion.user_id === user.user_id ? '100' : 'auto',
           height: '2rem',
         }}>
+        <span className="divvy-item-price">${item.price}</span>
         </div>
       )
   });
