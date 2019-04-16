@@ -14,6 +14,7 @@ class HostSetup extends Component {
     this.childTriggers = Array(this.instructionsText.length);
     this.state = {
       blob: null,
+      canMoveForward: true,
       curInstructionInd: 0,
       height: props.viewHeight,
       width: props.viewWidth,
@@ -29,6 +30,7 @@ class HostSetup extends Component {
     this.moveForward = this.moveForward.bind(this);
     this.moveBackward = this.moveBackward.bind(this);
     this.setTaxTipTotal = this.setTaxTipTotal.bind(this);
+    this.setCanMoveForward = this.setCanMoveForward.bind(this);
   }
   imageCallback(blob, height, width) {
     this.setState({
@@ -101,6 +103,10 @@ class HostSetup extends Component {
     this.setState({ tax: tax, tip: tip, total: total});
   }
 
+  setCanMoveForward(bool) {
+    this.setState({ canMoveForward: bool });
+  }
+
   genCropper() {
     if (this.state.curInstructionInd !== 0) { 
       if(this.state.blob == null) {
@@ -113,6 +119,7 @@ class HostSetup extends Component {
           moveForward={this.moveForward}
           moveBackward={this.moveBackward}
           setTriggers={(triggers) => this.childTriggers[1] = triggers}
+          setCanMoveForward={this.setCanMoveForward}
           />
         
       </div>;
@@ -127,6 +134,7 @@ class HostSetup extends Component {
         moveBackward={this.moveBackward}
         setTriggers={(triggers) => this.childTriggers[2] = triggers}
         setRoomCode={this.props.setRoomCode}
+        setCanMoveForward={this.setCanMoveForward}
       />
     }
   }
@@ -156,7 +164,7 @@ class HostSetup extends Component {
           <div className="d-flex justify-content-around align-items-center host-instructions">
             <Button variant="info" onClick={this.moveChildBackward}>back</Button>
             <span className="host-instructions-text">{text}</span>
-            <Button variant="info" onClick={this.moveChildForward}>next</Button>
+            <Button variant="info" onClick={this.moveChildForward} disabled={!this.state.canMoveForward}>next</Button>
           </div>
         <hr />
         {taxtipinput}

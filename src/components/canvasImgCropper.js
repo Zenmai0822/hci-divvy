@@ -16,6 +16,7 @@ class CanvasImgCropper extends Component {
   }
   componentDidMount() {
     this.props.setTriggers({forward: this.moveForward, back: this.moveBackward});
+    this.props.setCanMoveForward(true);
   }
 
   moveForward() {
