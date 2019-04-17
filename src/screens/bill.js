@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import CurrencyFormat from 'react-number-format';
 
 import backendService from '../services/backendService';
 
@@ -28,7 +29,15 @@ class Bill extends React.Component {
     let amountOwed = this.state.total === 'calculating'
       ? <p>Calculating your bill...</p>
       : <div>
-          <p>${this.state.total}</p>
+        <div>
+          <CurrencyFormat
+          value={this.state.total}
+          displayType={'text'}
+          decimalScale={2}
+          fixedDecimalScale={true}
+          thousandSeparator={true}
+          prefix={'$'}/>
+        </div>
           <Link to='/finish'><Button variant="success">Pay With Benmo</Button></Link>
         </div>;
     return (

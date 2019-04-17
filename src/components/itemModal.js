@@ -1,8 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Modal, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import { Container, Row, Col, Form } from 'react-bootstrap';
+import { Modal, ButtonToolbar, ToggleButtonGroup, ToggleButton, Container, Row, Col, Form, Button} from 'react-bootstrap';
+import CurrencyFormat from 'react-number-format';
 
 class ItemModal extends React.Component {
   constructor(props) {
@@ -53,14 +52,18 @@ class ItemModal extends React.Component {
                 <div className='w-100 pb-1'><img className='w-100' alt='receipt item' src={this.props.receiptImage}/></div>
                 <Form.Label column xs="6">This item costs:</Form.Label>
                 <Col xs="6">
-                  <Form.Control type="number"
-                    min="0"
-                    step="0.01"
-                    data-number-to-fixed="2"
-                    data-number-stepfactor="100"
+                  <CurrencyFormat
+                    thousandSeparator={true}
+                    decimalScale={2}
+                    customInput={Form.Control}
+                    fixedDecimalScale={true}
+                    value={this.state.cost}
+                    prefix={'$'}
                     placeholder="$"
-                    value={this.state.cost ? this.state.cost : ''}
-                    onChange={(e) => this.setState({cost: e.target.value !== '' ? parseFloat(e.target.value) : ''})}/>
+                    onValueChange={(values) => {
+                      const {value} = values;
+                      this.setState({cost: parseFloat(value)})
+                    }}/>
                 </Col>
               </Form.Group>
             </Form>

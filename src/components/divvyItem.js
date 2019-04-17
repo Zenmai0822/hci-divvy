@@ -1,10 +1,7 @@
 import React from 'react'
 import {Card} from 'react-bootstrap';
-
-const userColor = '#a6cee3';
-const colorArray = ['#1f78b4', '#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6',
-  '#6a3d9a','#ffff99'];
-const otherColor = '#b15928';
+import CurrencyFormat from 'react-number-format';
+import getColor from './userColor';
 
 export default function DivvyItem(props) {
   const {
@@ -12,27 +9,41 @@ export default function DivvyItem(props) {
     item,
     user,
   } = props;
+  let userItem = false;
   const splitForItem = item.amount === undefined || item.amount === null || item.amount.length === 0 ?
-    <div style={{
+    <CurrencyFormat
+      style={{
         flex: 1,
         height: '2rem',
-      }}>
-    </div>
-    :
+        textAlign: 'right',
+      }}
+      value={item.price}
+      displayType={'text'}
+      decimalScale={2}
+      fixedDecimalScale={true}
+      thousandSeparator={true}
+      prefix={'$'}/> :
     item.amount.map(function(portion, i) {
-      const color = portion.user_id === user.user_id ?
-        userColor :
-        (portion.user_id >= colorArray.length ?
-          otherColor :
-          colorArray[portion.user_id]);
+      const color = getColor(portion.user_id);
+      userItem = userItem || portion.user_id === user.user_id;
       return(
         <div key={i} className="divvy-item-split" style={{
           backgroundColor: color,
-          flex: portion.amount === -1 ? 1 : portion.amount,
+          flex: portion.amount,
           order: portion.user_id === user.user_id ? '100' : 'auto',
           height: '2rem',
         }}>
-        <span className="divvy-item-price">${item.price}</span>
+          {portion.user_id === user.user_id || item.amount.length -1 === i && !userItem ?
+            <span className="divvy-item-price">
+              <CurrencyFormat
+                value={item.price}
+                displayType={'text'}
+                decimalScale={2}
+                fixedDecimalScale={true}
+                thousandSeparator={true}
+                prefix={'$'}/>
+            </span> : <></>
+          }
         </div>
       )
   });
