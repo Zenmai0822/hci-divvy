@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Form } from 'react-bootstrap';
+import CurrencyFormat from 'react-number-format';
 
 class TotalAndTaxInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      billSubtotal: 0,
-      billTips: 0,
-      billTaxes: 0
+      billSubtotal: null,
+      billTips: null,
+      billTaxes: null
     };
     this.updateSubtotal = this.updateSubtotal.bind(this);
     this.updateTips = this.updateTips.bind(this);
@@ -20,21 +21,24 @@ class TotalAndTaxInput extends Component {
     this.props.setTriggers({forward: this.moveForward, back: this.moveBackward});
   }
 
-  updateSubtotal(event) {
+  updateSubtotal(values) {
+    const {value} = values;
     this.setState({
-      billSubtotal: parseFloat(event.target.value),
+      billSubtotal: parseFloat(value),
     })
   }
 
-  updateTips(event) {
+  updateTips(values) {
+    const {value} = values;
     this.setState({
-      billTips: parseFloat(event.target.value),
+      billTips: parseFloat(value),
     })
   }
 
-  updateTaxes(event) {
+  updateTaxes(values) {
+    const {value} = values;
     this.setState({
-      billTaxes: parseFloat(event.target.value),
+      billTaxes: parseFloat(value),
     })
   }
 
@@ -55,40 +59,43 @@ class TotalAndTaxInput extends Component {
               <Form.Group as={Row} controlId="billSubtotal">
                 <Form.Label column xs="6">Bill Subtotal:</Form.Label>
                 <Col xs="6">
-                  <Form.Control type="number"
-                    min="0"
-                    step="0.01"
-                    data-number-to-fixed="2"
-                    data-number-stepfactor="100"
+                  <CurrencyFormat
+                    thousandSeparator={true}
+                    decimalScale={2}
+                    customInput={Form.Control}
+                    fixedDecimalScale={true}
+                    value={this.state.billSubtotal}
+                    prefix={'$'}
                     placeholder="$"
-                    onChange={this.updateSubtotal}
-                    />
+                    onValueChange={this.updateSubtotal}/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="billTips">
                 <Form.Label column xs="6">Tips / Gratuities:</Form.Label>
                 <Col xs="6">
-                  <Form.Control type="number"
-                    min="0"
-                    step="0.01"
-                    data-number-to-fixed="2"
-                    data-number-stepfactor="100"
+                  <CurrencyFormat
+                    thousandSeparator={true}
+                    decimalScale={2}
+                    customInput={Form.Control}
+                    fixedDecimalScale={true}
+                    value={this.state.billTips}
+                    prefix={'$'}
                     placeholder="$"
-                    onChange={this.updateTips}
-                  />
+                    onValueChange={this.updateTips}/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="billTaxes">
                 <Form.Label column xs="6">Taxes:</Form.Label>
                 <Col xs="6">
-                  <Form.Control type="number"
-                    min="0"
-                    step="0.01"
-                    data-number-to-fixed="2"
-                    data-number-stepfactor="100"
+                  <CurrencyFormat
+                    thousandSeparator={true}
+                    decimalScale={2}
+                    customInput={Form.Control}
+                    fixedDecimalScale={true}
+                    value={this.state.billTaxes}
+                    prefix={'$'}
                     placeholder="$"
-                    onChange={this.updateTaxes}
-                  />
+                    onValueChange={this.updateTaxes}/>
                 </Col>
               </Form.Group>
             </Form>
