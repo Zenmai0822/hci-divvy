@@ -1,0 +1,9 @@
+.divvy-item-split {
+  align-items: center;
+  text-align: right;
+}
+
+.divvy-item-price {
+  line-height: 2em;
+  margin-right: 10px;
+}

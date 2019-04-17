@@ -145,7 +145,7 @@ class AppRouter extends Component {
               crossorigin="anonymous"
             />
           </Helmet>
-          <DivvyNav roomCode={this.state.roomCode} />
+          <DivvyNav roomCode={this.state.roomCode} user={this.state.user}/>
           <div className="container-fluid screen">
             <Route path="/" exact render={(props) => <Index {...props} 
                   setRoomCode={this.setRoomCode} 

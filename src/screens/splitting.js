@@ -44,16 +44,28 @@ class Splitting extends React.Component {
             item_id: item.id})
         }).then(result => {return result.json()})
         .then(function(result) {console.log("updated cost");console.log(result);}.bind(this));
+    } if(amount !== 0) {
+      fetch('https://doublewb.xyz/hci/amounts',
+        {
+          method: itemAmount === null ? 'POST' : 'PUT',
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            room_code: this.props.room.code,
+            user_id: this.props.user.user_id,
+            amount: amount,
+            item_id: item.id
+          })
+        }).then(result => {
+        return result.json()
+      })
+        .then(function (result) {
+          console.log("updated item amount");
+          console.log(result);
+          this.hideModal();
+        }.bind(this));
+    } else {
+      this.hideModal();
     }
-    fetch('https://doublewb.xyz/hci/amounts',
-      { method: itemAmount === null ? 'POST' : 'PUT',
-        headers: { "Content-Type" : "application/json" },
-        body: JSON.stringify({room_code: this.props.room.code,
-          user_id: this.props.user.user_id,
-          amount: amount,
-          item_id: item.id})
-      }).then(result => {return result.json()})
-        .then(function(result) {console.log("updated item amount");console.log(result); this.hideModal()}.bind(this));
   }
 
   render() {

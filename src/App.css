@@ -1,6 +1,7 @@
 @import './screens/index.css';
 @import './screens/hostSetup.css';
 @import './screens/splitting.css';
+@import './components/divvyItem.css';
 
 .App {
   text-align: center;
