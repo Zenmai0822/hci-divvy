@@ -57,7 +57,7 @@ class ItemModal extends React.Component {
                     decimalScale={2}
                     customInput={Form.Control}
                     fixedDecimalScale={true}
-                    value={this.state.cost}
+                    value={this.state.cost ? this.state.cost : ''}
                     prefix={'$'}
                     placeholder="$"
                     onValueChange={(values) => {

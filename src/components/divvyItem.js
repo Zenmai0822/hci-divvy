@@ -11,18 +11,19 @@ export default function DivvyItem(props) {
   } = props;
   let userItem = false;
   const splitForItem = item.amount === undefined || item.amount === null || item.amount.length === 0 ?
-    <CurrencyFormat
-      style={{
-        flex: 1,
-        height: '2rem',
-        textAlign: 'right',
-      }}
-      value={item.price}
-      displayType={'text'}
-      decimalScale={2}
-      fixedDecimalScale={true}
-      thousandSeparator={true}
-      prefix={'$'}/> :
+      <CurrencyFormat
+        style={{
+          flex: 1,
+          height: '2rem',
+          textAlign: 'right',
+        }}
+        value={item.price}
+        displayType={'text'}
+        decimalScale={2}
+        className="divvy-item-price"
+        fixedDecimalScale={true}
+        thousandSeparator={true}
+        prefix={'$'}/> :
     item.amount.map(function(portion, i) {
       const color = getColor(portion.user_id);
       userItem = userItem || portion.user_id === user.user_id;
